@@ -1,5 +1,6 @@
 package org.bukkit.inventory;
 
+import com.destroystokyo.paper.inventory.meta.ArmorStandMeta;
 import com.google.common.collect.Multimap;
 import java.util.function.Consumer;
 import org.bukkit.Keyed;
@@ -161,7 +162,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<SpawnEggMeta> ARMADILLO_SPAWN_EGG = getItemType("armadillo_spawn_egg");
 
-    ItemType.Typed<com.destroystokyo.paper.inventory.meta.ArmorStandMeta> ARMOR_STAND = getItemType("armor_stand");
+    ItemType.Typed<ArmorStandMeta> ARMOR_STAND = getItemType("armor_stand");
 
     ItemType.Typed<ItemMeta> ARMS_UP_POTTERY_SHERD = getItemType("arms_up_pottery_sherd");
 
@@ -281,7 +282,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> BLACK_BANNER = getItemType("black_banner");
 
-    ItemType.Typed<ItemMeta> BLACK_BED = getItemType("black_bed");
+    ItemType.Typed<BlockStateMeta> BLACK_BED = getItemType("black_bed");
 
     ItemType.Typed<BundleMeta> BLACK_BUNDLE = getItemType("black_bundle");
 
@@ -327,7 +328,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> BLUE_BANNER = getItemType("blue_banner");
 
-    ItemType.Typed<ItemMeta> BLUE_BED = getItemType("blue_bed");
+    ItemType.Typed<BlockStateMeta> BLUE_BED = getItemType("blue_bed");
 
     ItemType.Typed<BundleMeta> BLUE_BUNDLE = getItemType("blue_bundle");
 
@@ -407,7 +408,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> BROWN_BANNER = getItemType("brown_banner");
 
-    ItemType.Typed<ItemMeta> BROWN_BED = getItemType("brown_bed");
+    ItemType.Typed<BlockStateMeta> BROWN_BED = getItemType("brown_bed");
 
     ItemType.Typed<BundleMeta> BROWN_BUNDLE = getItemType("brown_bundle");
 
@@ -629,7 +630,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<ItemMeta> COMPOSTER = getItemType("composter");
 
-    ItemType.Typed<ItemMeta> CONDUIT = getItemType("conduit");
+    ItemType.Typed<BlockStateMeta> CONDUIT = getItemType("conduit");
 
     ItemType.Typed<ItemMeta> COOKED_BEEF = getItemType("cooked_beef");
 
@@ -741,7 +742,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> CYAN_BANNER = getItemType("cyan_banner");
 
-    ItemType.Typed<ItemMeta> CYAN_BED = getItemType("cyan_bed");
+    ItemType.Typed<BlockStateMeta> CYAN_BED = getItemType("cyan_bed");
 
     ItemType.Typed<BundleMeta> CYAN_BUNDLE = getItemType("cyan_bundle");
 
@@ -1209,7 +1210,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<ItemMeta> GRAVEL = getItemType("gravel");
 
-    ItemType.Typed<ItemMeta> GRAY_BED = getItemType("gray_bed");
+    ItemType.Typed<BlockStateMeta> GRAY_BED = getItemType("gray_bed");
 
     ItemType.Typed<BundleMeta> GRAY_BUNDLE = getItemType("gray_bundle");
 
@@ -1235,7 +1236,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<ItemMeta> GRAY_WOOL = getItemType("gray_wool");
 
-    ItemType.Typed<ItemMeta> GREEN_BED = getItemType("green_bed");
+    ItemType.Typed<BlockStateMeta> GREEN_BED = getItemType("green_bed");
 
     ItemType.Typed<BundleMeta> GREEN_BUNDLE = getItemType("green_bundle");
 
@@ -1433,7 +1434,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<ItemMeta> LIGHT = getItemType("light");
 
-    ItemType.Typed<ItemMeta> LIGHT_BLUE_BED = getItemType("light_blue_bed");
+    ItemType.Typed<BlockStateMeta> LIGHT_BLUE_BED = getItemType("light_blue_bed");
 
     ItemType.Typed<BundleMeta> LIGHT_BLUE_BUNDLE = getItemType("light_blue_bundle");
 
@@ -1459,7 +1460,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<ItemMeta> LIGHT_BLUE_WOOL = getItemType("light_blue_wool");
 
-    ItemType.Typed<ItemMeta> LIGHT_GRAY_BED = getItemType("light_gray_bed");
+    ItemType.Typed<BlockStateMeta> LIGHT_GRAY_BED = getItemType("light_gray_bed");
 
     ItemType.Typed<BundleMeta> LIGHT_GRAY_BUNDLE = getItemType("light_gray_bundle");
 
@@ -1495,7 +1496,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<ItemMeta> LILY_PAD = getItemType("lily_pad");
 
-    ItemType.Typed<ItemMeta> LIME_BED = getItemType("lime_bed");
+    ItemType.Typed<BlockStateMeta> LIME_BED = getItemType("lime_bed");
 
     ItemType.Typed<BundleMeta> LIME_BUNDLE = getItemType("lime_bundle");
 
@@ -1527,7 +1528,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<ItemMeta> LOOM = getItemType("loom");
 
-    ItemType.Typed<ItemMeta> MAGENTA_BED = getItemType("magenta_bed");
+    ItemType.Typed<BlockStateMeta> MAGENTA_BED = getItemType("magenta_bed");
 
     ItemType.Typed<BundleMeta> MAGENTA_BUNDLE = getItemType("magenta_bundle");
 
@@ -1793,7 +1794,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> ORANGE_BANNER = getItemType("orange_banner");
 
-    ItemType.Typed<ItemMeta> ORANGE_BED = getItemType("orange_bed");
+    ItemType.Typed<BlockStateMeta> ORANGE_BED = getItemType("orange_bed");
 
     ItemType.Typed<BundleMeta> ORANGE_BUNDLE = getItemType("orange_bundle");
 
@@ -1917,7 +1918,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> PINK_BANNER = getItemType("pink_banner");
 
-    ItemType.Typed<ItemMeta> PINK_BED = getItemType("pink_bed");
+    ItemType.Typed<BlockStateMeta> PINK_BED = getItemType("pink_bed");
 
     ItemType.Typed<BundleMeta> PINK_BUNDLE = getItemType("pink_bundle");
 
@@ -2069,7 +2070,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> PURPLE_BANNER = getItemType("purple_banner");
 
-    ItemType.Typed<ItemMeta> PURPLE_BED = getItemType("purple_bed");
+    ItemType.Typed<BlockStateMeta> PURPLE_BED = getItemType("purple_bed");
 
     ItemType.Typed<BundleMeta> PURPLE_BUNDLE = getItemType("purple_bundle");
 
@@ -2147,7 +2148,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> RED_BANNER = getItemType("red_banner");
 
-    ItemType.Typed<ItemMeta> RED_BED = getItemType("red_bed");
+    ItemType.Typed<BlockStateMeta> RED_BED = getItemType("red_bed");
 
     ItemType.Typed<BundleMeta> RED_BUNDLE = getItemType("red_bundle");
 
@@ -2781,7 +2782,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> WHITE_BANNER = getItemType("white_banner");
 
-    ItemType.Typed<ItemMeta> WHITE_BED = getItemType("white_bed");
+    ItemType.Typed<BlockStateMeta> WHITE_BED = getItemType("white_bed");
 
     ItemType.Typed<BundleMeta> WHITE_BUNDLE = getItemType("white_bundle");
 
@@ -2845,7 +2846,7 @@ public interface ItemType extends Keyed, Translatable, net.kyori.adventure.trans
 
     ItemType.Typed<BannerMeta> YELLOW_BANNER = getItemType("yellow_banner");
 
-    ItemType.Typed<ItemMeta> YELLOW_BED = getItemType("yellow_bed");
+    ItemType.Typed<BlockStateMeta> YELLOW_BED = getItemType("yellow_bed");
 
     ItemType.Typed<BundleMeta> YELLOW_BUNDLE = getItemType("yellow_bundle");
 

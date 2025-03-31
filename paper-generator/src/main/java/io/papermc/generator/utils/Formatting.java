@@ -73,8 +73,6 @@ public final class Formatting {
         return newName;
     }
 
-    public static final Comparator<String> ALPHABETIC_KEY_ORDER = alphabeticKeyOrder(path -> path);
-
     public static <T> Comparator<T> alphabeticKeyOrder(Function<T, String> mapper) {
         return (o1, o2) -> {
             String path1 = mapper.apply(o1);

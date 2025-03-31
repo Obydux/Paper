@@ -2,6 +2,7 @@ package io.papermc.generator.rewriter.types.registry;
 
 import com.google.common.base.Suppliers;
 import io.papermc.generator.Main;
+import io.papermc.generator.registry.RegistryIdentifiable;
 import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.experimental.ExperimentalCollector;
@@ -16,15 +17,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureElement;
 import net.minecraft.world.flag.FeatureFlags;
 import org.jetbrains.annotations.ApiStatus;
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import static io.papermc.generator.utils.Formatting.quoted;
 
-@NullMarked
 @ApiStatus.Obsolete
-public class EnumRegistryRewriter<T> extends EnumRewriter<Holder.Reference<T>> {
+public class EnumRegistryRewriter<T> extends EnumRewriter<Holder.Reference<T>> implements RegistryIdentifiable<T> {
 
+    private final ResourceKey<? extends Registry<T>> registryKey;
     private final Supplier<Registry<T>> registry;
     private final Supplier<Map<ResourceKey<T>, SingleFlagHolder>> experimentalKeys;
     private final boolean isFilteredRegistry;
@@ -35,10 +35,16 @@ public class EnumRegistryRewriter<T> extends EnumRewriter<Holder.Reference<T>> {
     }
 
     protected EnumRegistryRewriter(ResourceKey<? extends Registry<T>> registryKey, boolean hasKeyArgument) {
+        this.registryKey = registryKey;
         this.registry = Suppliers.memoize(() -> Main.REGISTRY_ACCESS.lookupOrThrow(registryKey));
         this.experimentalKeys = Suppliers.memoize(() -> ExperimentalCollector.collectDataDrivenElementIds(this.registry.get()));
         this.isFilteredRegistry = FeatureElement.FILTERED_REGISTRIES.contains(registryKey);
         this.hasKeyArgument = hasKeyArgument;
+    }
+
+    @Override
+    public ResourceKey<? extends Registry<T>> getRegistryKey() {
+        return this.registryKey;
     }
 
     @Override

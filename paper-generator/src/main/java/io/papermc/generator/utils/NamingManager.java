@@ -3,6 +3,8 @@ package io.papermc.generator.utils;
 import com.google.common.base.CaseFormat;
 import java.util.Optional;
 import java.util.function.Predicate;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeName;
 import javax.lang.model.SourceVersion;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
@@ -73,6 +75,16 @@ public class NamingManager {
             paramName = this.lowerCamelName;
         } else {
             paramName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, type.getSimpleName());
+        }
+        return ensureValidName(paramName);
+    }
+
+    public String paramName(TypeName type) {
+        final String paramName;
+        if (type.isPrimitive()) {
+            paramName = this.lowerCamelName;
+        } else {
+            paramName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, type instanceof ClassName className ? className.simpleName() : type.toString());
         }
         return ensureValidName(paramName);
     }

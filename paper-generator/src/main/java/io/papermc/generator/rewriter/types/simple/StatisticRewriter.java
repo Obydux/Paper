@@ -1,6 +1,7 @@
 package io.papermc.generator.rewriter.types.simple;
 
 import com.google.common.collect.ImmutableMap;
+import io.papermc.generator.rewriter.types.Types;
 import io.papermc.generator.rewriter.types.registry.EnumRegistryRewriter;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
@@ -20,7 +21,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import org.bukkit.Statistic;
 
 import static io.papermc.generator.utils.Formatting.quoted;
 
@@ -143,8 +143,7 @@ public class StatisticRewriter {
 
             return super.rewriteEnumValue(reference)
                 .rename(name -> FIELD_RENAMES.getOrDefault(name, name))
-                .argument("%s.%s".formatted(Statistic.Type.class.getSimpleName(), TYPE_MAPPING.get(genericType))); // find a more direct way?
-
+                .argument("%s.%s".formatted(Types.STATISTIC_TYPE.simpleName(), TYPE_MAPPING.get(genericType))); // find a more direct way?
         }
     }
 

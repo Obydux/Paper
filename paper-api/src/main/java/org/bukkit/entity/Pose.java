@@ -5,9 +5,10 @@ package org.bukkit.entity;
  */
 public enum Pose {
 
+    // Start generate - Pose
+    // @GeneratedFrom 1.21.5
     /**
      * Entity is standing normally.
-     *
      */
     STANDING,
     /**
@@ -78,4 +79,5 @@ public enum Pose {
      * Entity is inhaling.
      */
     INHALING;
+    // End generate - Pose
 }
