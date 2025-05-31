@@ -15,6 +15,7 @@ import io.papermc.generator.rewriter.types.registry.RegistryFieldRewriter;
 import io.papermc.generator.rewriter.types.registry.RegistryTagRewriter;
 import io.papermc.generator.rewriter.types.registry.TagRewriter;
 import io.papermc.generator.rewriter.types.simple.BlockTypeRewriter;
+import io.papermc.generator.rewriter.types.simple.CraftArmadilloRewriter;
 import io.papermc.generator.rewriter.types.simple.CraftBlockDataMapping;
 import io.papermc.generator.rewriter.types.simple.CraftBlockEntityStateMapping;
 import io.papermc.generator.rewriter.types.simple.CraftItemMetasRewriter;
@@ -46,6 +47,7 @@ import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.animal.Salmon;
 import net.minecraft.world.entity.animal.TropicalFish;
+import net.minecraft.world.entity.animal.armadillo.Armadillo;
 import net.minecraft.world.entity.animal.sniffer.Sniffer;
 import net.minecraft.world.entity.vehicle.AbstractBoat;
 import net.minecraft.world.item.ItemUseAnimation;
@@ -108,6 +110,7 @@ public final class Rewriters {
             .register("BoatStatus", Types.BOAT_STATUS, new EnumCloneRewriter<>(AbstractBoat.Status.class))
             .register("FoxType", Types.FOX_TYPE, new EnumCloneRewriter<>(Fox.Variant.class))
             .register("SalmonVariant", Types.SALMON_VARIANT, new EnumCloneRewriter<>(Salmon.Variant.class))
+            .register("ArmadilloState", Types.ARMADILLO_STATE, new EnumCloneRewriter<>(Armadillo.ArmadilloState.class))
             .register("ItemUseAnimation", Types.ITEM_USE_ANIMATION, new EnumCloneRewriter<>(ItemUseAnimation.class))
             .register("ItemRarity", Types.ITEM_RARITY, new EnumCloneRewriter<>(Rarity.class) {
                 @Override
@@ -187,6 +190,7 @@ public final class Rewriters {
                 sameHolder("CraftPotionUtil#extendable", new CraftPotionUtilRewriter("long"))
             ))
             .register("PaperFeatureFlagProviderImpl#FLAGS", Types.PAPER_FEATURE_FLAG_PROVIDER_IMPL, new PaperFeatureFlagMapping())
+            .register("CraftArmadillo#stateToBukkit", Types.CRAFT_ARMADILLO, new CraftArmadilloRewriter())
             .register("MobGoalHelper#bukkitMap", Types.MOB_GOAL_HELPER, new SearchReplaceRewriter() {
                 @Override
                 protected void insert(SearchMetadata metadata, StringBuilder builder) {

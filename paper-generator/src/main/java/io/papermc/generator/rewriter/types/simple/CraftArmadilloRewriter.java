@@ -1,0 +1,23 @@
+package io.papermc.generator.rewriter.types.simple;
+
+import io.papermc.generator.rewriter.types.Types;
+import io.papermc.typewriter.preset.SwitchRewriter;
+import io.papermc.typewriter.preset.model.CodeBlock;
+import io.papermc.typewriter.preset.model.SwitchCases;
+import io.papermc.typewriter.preset.model.SwitchContent;
+import net.minecraft.world.entity.animal.armadillo.Armadillo;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CraftArmadilloRewriter extends SwitchRewriter {
+
+    @Override
+    protected SwitchContent getContent() {
+        Armadillo.ArmadilloState[] values = Armadillo.ArmadilloState.values();
+        List<SwitchCases> cases = new ArrayList<>(values.length);
+        for (Armadillo.ArmadilloState state : values) {
+            cases.add(SwitchCases.inlined(state.name(), CodeBlock.of("%s.%s;".formatted(Types.ARMADILLO_STATE.simpleName(), state.name())), true)); // todo(typewriter) further inline for arrow case
+        }
+        return SwitchContent.of(cases);
+    }
+}

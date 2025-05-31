@@ -40,19 +40,17 @@ public class CraftArmadillo extends CraftAnimals implements Armadillo {
 
     public static State stateToBukkit(ArmadilloState state) {
         return switch (state) {
-            case IDLE -> State.IDLE;
-            case ROLLING -> State.ROLLING;
-            case SCARED -> State.SCARED;
-            case UNROLLING -> State.UNROLLING;
-        };
-    }
-
-    public static ArmadilloState stateToNMS(State state) {
-        return switch (state) {
-            case State.IDLE -> ArmadilloState.IDLE;
-            case State.ROLLING -> ArmadilloState.ROLLING;
-            case State.SCARED -> ArmadilloState.SCARED;
-            case State.UNROLLING -> ArmadilloState.UNROLLING;
+            // Start generate - CraftArmadillo#stateToBukkit
+            // @GeneratedFrom 1.21.5
+            case IDLE -> 
+                State.IDLE;
+            case ROLLING -> 
+                State.ROLLING;
+            case SCARED -> 
+                State.SCARED;
+            case UNROLLING -> 
+                State.UNROLLING;
+            // End generate - CraftArmadillo#stateToBukkit
         };
     }
 }

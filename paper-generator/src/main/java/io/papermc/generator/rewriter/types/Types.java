@@ -55,6 +55,8 @@ public final class Types {
 
     public static final ClassNamed SALMON_VARIANT = BUKKIT.relativeClassNamed("entity", "Salmon", "Variant");
 
+    public static final ClassNamed ARMADILLO_STATE = BUKKIT.relativeClassNamed("entity", "Armadillo", "State");
+
     public static final ClassNamed PANDA_GENE = BUKKIT.relativeClassNamed("entity", "Panda", "Gene");
 
     public static final ClassNamed BOAT_STATUS = BUKKIT.relativeClassNamed("entity", "Boat", "Status");
@@ -99,6 +101,8 @@ public final class Types {
     public static final ClassNamed CRAFT_STATISTIC = CRAFT_BUKKIT.relativeClassNamed(null, "CraftStatistic");
 
     public static final ClassNamed CRAFT_POTION_UTIL = CRAFT_BUKKIT.relativeClassNamed("potion", "CraftPotionUtil");
+
+    public static final ClassNamed CRAFT_ARMADILLO = CRAFT_BUKKIT.relativeClassNamed("entity", "CraftArmadillo");
 
     public static final ClassNamed FIELD_RENAME = CRAFT_BUKKIT.relativeClassNamed("legacy", "FieldRename");
 
