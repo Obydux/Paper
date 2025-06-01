@@ -8,7 +8,7 @@ import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.experimental.ExperimentalCollector;
 import io.papermc.generator.utils.experimental.SingleFlagHolder;
 import io.papermc.typewriter.preset.EnumRewriter;
-import io.papermc.typewriter.preset.model.EnumValue;
+import io.papermc.typewriter.preset.model.EnumConstant;
 import java.util.Map;
 import java.util.function.Supplier;
 import net.minecraft.core.Holder;
@@ -28,18 +28,12 @@ public class EnumRegistryRewriter<T> extends EnumRewriter<Holder.Reference<T>> i
     private final Supplier<Registry<T>> registry;
     private final Supplier<Map<ResourceKey<T>, SingleFlagHolder>> experimentalKeys;
     private final boolean isFilteredRegistry;
-    private final boolean hasKeyArgument;
 
     public EnumRegistryRewriter(ResourceKey<? extends Registry<T>> registryKey) {
-        this(registryKey, true);
-    }
-
-    protected EnumRegistryRewriter(ResourceKey<? extends Registry<T>> registryKey, boolean hasKeyArgument) {
         this.registryKey = registryKey;
         this.registry = Suppliers.memoize(() -> Main.REGISTRY_ACCESS.lookupOrThrow(registryKey));
         this.experimentalKeys = Suppliers.memoize(() -> ExperimentalCollector.collectDataDrivenElementIds(this.registry.get()));
         this.isFilteredRegistry = FeatureElement.FILTERED_REGISTRIES.contains(registryKey);
-        this.hasKeyArgument = hasKeyArgument;
     }
 
     @Override
@@ -53,23 +47,24 @@ public class EnumRegistryRewriter<T> extends EnumRewriter<Holder.Reference<T>> i
     }
 
     @Override
-    protected EnumValue.Builder rewriteEnumValue(Holder.Reference<T> reference) {
-        EnumValue.Builder value = EnumValue.builder(Formatting.formatKeyAsField(reference.key().location().getPath()));
-        if (this.hasKeyArgument) {
-            value.argument(quoted(reference.key().location().getPath()));
-        }
-        return value;
+    protected EnumConstant.Builder constantPrototype(Holder.Reference<T> reference) {
+        return EnumConstant.builder(Formatting.formatKeyAsField(reference.key().location().getPath()));
     }
 
     @Override
-    protected void appendEnumValue(Holder.Reference<T> reference, StringBuilder builder, String indent, boolean reachEnd) {
+    protected void rewriteConstant(EnumConstant.Builder builder, Holder.Reference<T> reference) {
+        builder.argument(quoted(reference.key().location().getPath()));
+    }
+
+    @Override
+    protected void appendConstant(Holder.Reference<T> reference, StringBuilder builder, String indent, boolean reachEnd) {
         // experimental annotation
         SingleFlagHolder requiredFeature = this.getRequiredFeature(reference);
         if (requiredFeature != null) {
             Annotations.experimentalAnnotations(builder, indent, this.importCollector, requiredFeature);
         }
 
-        super.appendEnumValue(reference, builder, indent, reachEnd);
+        super.appendConstant(reference, builder, indent, reachEnd);
     }
 
     protected @Nullable SingleFlagHolder getRequiredFeature(Holder.Reference<T> reference) {

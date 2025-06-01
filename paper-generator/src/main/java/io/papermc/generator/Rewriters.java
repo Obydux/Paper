@@ -31,7 +31,7 @@ import io.papermc.generator.rewriter.types.simple.trial.VillagerProfessionRewrit
 import io.papermc.generator.rewriter.types.registry.RegistriesArgumentProviderRewriter;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.typewriter.preset.EnumCloneRewriter;
-import io.papermc.typewriter.preset.model.EnumValue;
+import io.papermc.typewriter.preset.model.EnumConstant;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -84,24 +84,26 @@ public final class Rewriters {
             .register("PotionType", new EnumRegistryRewriter<>(Registries.POTION))
             .register("EntityType", new EntityTypeRewriter())
             .register("DisplaySlot", Types.DISPLAY_SLOT, new EnumCloneRewriter<>(DisplaySlot.class) {
-                @Override
-                protected EnumValue.Builder rewriteEnumValue(DisplaySlot slot) {
-                    final String name;
-                    if (slot == DisplaySlot.LIST) {
-                        name = "PLAYER_LIST";
-                    } else {
-                        name = Formatting.formatKeyAsField(slot.getSerializedName());
-                    }
 
-                    return EnumValue.builder(name).argument(quoted(slot.getSerializedName()));
+                @Override
+                protected EnumConstant.Builder constantPrototype(DisplaySlot slot) {
+                    return EnumConstant.builder(Formatting.formatKeyAsField(slot.getSerializedName()));
+                }
+
+                @Override
+                protected void rewriteConstant(EnumConstant.Builder builder, DisplaySlot slot) {
+                    if (slot == DisplaySlot.LIST) {
+                        builder.rename(name -> "PLAYER_LIST");
+                    }
+                    builder.argument(quoted(slot.getSerializedName()));
                 }
             })
             .register("Pose", Types.POSE, new PoseRewriter())
             .register("SnifferState", Types.SNIFFER_STATE, new EnumCloneRewriter<>(Sniffer.State.class))
             .register("PandaGene", Types.PANDA_GENE, new EnumCloneRewriter<>(Panda.Gene.class) {
                 @Override
-                protected EnumValue.Builder rewriteEnumValue(Panda.Gene gene) {
-                    return super.rewriteEnumValue(gene).argument(String.valueOf(gene.isRecessive()));
+                protected void rewriteConstant(EnumConstant.Builder builder, Panda.Gene gene) {
+                    builder.argument(String.valueOf(gene.isRecessive()));
                 }
             })
             .register("CookingBookCategory", Types.COOKING_BOOK_CATEGORY, new EnumCloneRewriter<>(CookingBookCategory.class))
@@ -114,10 +116,8 @@ public final class Rewriters {
             .register("ItemUseAnimation", Types.ITEM_USE_ANIMATION, new EnumCloneRewriter<>(ItemUseAnimation.class))
             .register("ItemRarity", Types.ITEM_RARITY, new EnumCloneRewriter<>(Rarity.class) {
                 @Override
-                protected EnumValue.Builder rewriteEnumValue(Rarity rarity) {
-                    return super.rewriteEnumValue(rarity).argument(
-                        "%s.%s".formatted(Types.NAMED_TEXT_COLOR.simpleName(), rarity.color().name())
-                    );
+                protected void rewriteConstant(EnumConstant.Builder builder, Rarity rarity) {
+                    builder.argument("%s.%s".formatted(Types.NAMED_TEXT_COLOR.simpleName(), rarity.color().name()));
                 }
             })
             .register(Types.MATERIAL, composite(

@@ -7,7 +7,6 @@ import java.util.Locale;
 import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -43,10 +42,6 @@ public final class Formatting {
 
     public static String quoted(String value) {
         return "\"" + value + "\"";
-    }
-
-    public static String[] asCode(int... values) {
-        return IntStream.of(values).mapToObj(Integer::toString).toArray(String[]::new);
     }
 
     public static String stripWordOfCamelCaseName(String name, String word, boolean onlyOnce) {

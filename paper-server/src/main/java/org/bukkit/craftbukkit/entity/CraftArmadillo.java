@@ -18,7 +18,7 @@ public class CraftArmadillo extends CraftAnimals implements Armadillo {
 
     @Override
     public State getState() {
-        return CraftArmadillo.stateToBukkit(this.getHandle().getState());
+        return State.valueOf(this.getHandle().getState().name());
     }
 
     @Override
@@ -42,14 +42,10 @@ public class CraftArmadillo extends CraftAnimals implements Armadillo {
         return switch (state) {
             // Start generate - CraftArmadillo#stateToBukkit
             // @GeneratedFrom 1.21.5
-            case IDLE -> 
-                State.IDLE;
-            case ROLLING -> 
-                State.ROLLING;
-            case SCARED -> 
-                State.SCARED;
-            case UNROLLING -> 
-                State.UNROLLING;
+            case IDLE -> State.IDLE;
+            case ROLLING -> State.ROLLING;
+            case SCARED -> State.SCARED;
+            case UNROLLING -> State.UNROLLING;
             // End generate - CraftArmadillo#stateToBukkit
         };
     }

@@ -4,7 +4,7 @@ import io.papermc.generator.resources.DataFileLoader;
 import io.papermc.generator.resources.DataFiles;
 import io.papermc.generator.rewriter.types.registry.EnumRegistryRewriter;
 import io.papermc.generator.resources.EntityTypeData;
-import io.papermc.typewriter.preset.model.EnumValue;
+import io.papermc.typewriter.preset.model.EnumConstant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,11 +17,11 @@ import static io.papermc.generator.utils.Formatting.quoted;
 public class EntityTypeRewriter extends EnumRegistryRewriter<EntityType<?>> {
 
     public EntityTypeRewriter() {
-        super(Registries.ENTITY_TYPE, false);
+        super(Registries.ENTITY_TYPE);
     }
 
     @Override
-    protected EnumValue.Builder rewriteEnumValue(Holder.Reference<EntityType<?>> reference) {
+    protected void rewriteConstant(EnumConstant.Builder builder, Holder.Reference<EntityType<?>> reference) {
         EntityTypeData data = Objects.requireNonNull(DataFileLoader.get(DataFiles.ENTITY_TYPES).get(reference.key()), () -> "Missing entity type data for " + reference);
         String path = reference.key().location().getPath();
         List<String> arguments = new ArrayList<>(4);
@@ -32,6 +32,6 @@ public class EntityTypeRewriter extends EnumRegistryRewriter<EntityType<?>> {
         if (!reference.value().canSummon()) {
             arguments.add(Boolean.FALSE.toString());
         }
-        return super.rewriteEnumValue(reference).arguments(arguments);
+        builder.arguments(arguments);
     }
 }

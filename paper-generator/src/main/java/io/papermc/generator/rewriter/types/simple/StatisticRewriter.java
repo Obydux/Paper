@@ -5,7 +5,7 @@ import io.papermc.generator.rewriter.types.Types;
 import io.papermc.generator.rewriter.types.registry.EnumRegistryRewriter;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
-import io.papermc.typewriter.preset.model.EnumValue;
+import io.papermc.typewriter.preset.model.EnumConstant;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
@@ -65,12 +65,12 @@ public class StatisticRewriter {
     public static class Custom extends EnumRegistryRewriter<ResourceLocation> {
 
         public Custom() {
-            super(Registries.CUSTOM_STAT, false);
+            super(Registries.CUSTOM_STAT);
         }
 
         @Override
-        protected EnumValue.Builder rewriteEnumValue(Holder.Reference<ResourceLocation> reference) {
-            return super.rewriteEnumValue(reference).rename(name -> FIELD_RENAMES.getOrDefault(name, name));
+        protected void rewriteConstant(EnumConstant.Builder builder, Holder.Reference<ResourceLocation> reference) {
+            builder.rename(name -> FIELD_RENAMES.getOrDefault(name, name));
         }
     }
 
@@ -81,16 +81,14 @@ public class StatisticRewriter {
         );
 
         public CraftCustom() {
-            super(Registries.CUSTOM_STAT, false);
+            super(Registries.CUSTOM_STAT);
         }
 
         @Override
-        protected EnumValue.Builder rewriteEnumValue(Holder.Reference<ResourceLocation> reference) {
-            String keyedName = Formatting.formatKeyAsField(reference.key().location().getPath());
-
-            return super.rewriteEnumValue(reference)
+        protected void rewriteConstant(EnumConstant.Builder builder, Holder.Reference<ResourceLocation> reference) {
+            builder
                 .rename(name -> FIELD_RENAMES.getOrDefault(name, name))
-                .argument("%s.%s".formatted(Stats.class.getSimpleName(), INTERNAL_FIELD_RENAMES.getOrDefault(keyedName, keyedName)));
+                .argument("%s.%s".formatted(Stats.class.getSimpleName(), INTERNAL_FIELD_RENAMES.getOrDefault(builder.initialName(), builder.initialName())));
         }
     }
 
@@ -125,7 +123,7 @@ public class StatisticRewriter {
         }
 
         public Type() {
-            super(Registries.STAT_TYPE, false);
+            super(Registries.STAT_TYPE);
         }
 
         @Override
@@ -135,13 +133,13 @@ public class StatisticRewriter {
         }
 
         @Override
-        protected EnumValue.Builder rewriteEnumValue(Holder.Reference<StatType<?>> reference) {
+        protected void rewriteConstant(EnumConstant.Builder builder, Holder.Reference<StatType<?>> reference) {
             Class<?> genericType = FIELD_GENERIC_TYPE.get(reference.value());
             if (!TYPE_MAPPING.containsKey(genericType)) {
                 throw new IllegalStateException("Unable to translate stat type generic " + genericType.getCanonicalName() + " into the api!");
             }
 
-            return super.rewriteEnumValue(reference)
+            builder
                 .rename(name -> FIELD_RENAMES.getOrDefault(name, name))
                 .argument("%s.%s".formatted(Types.STATISTIC_TYPE.simpleName(), TYPE_MAPPING.get(genericType))); // find a more direct way?
         }
@@ -150,7 +148,7 @@ public class StatisticRewriter {
     public static class CraftType extends EnumRegistryRewriter<StatType<?>> {
 
         public CraftType() {
-            super(Registries.STAT_TYPE, false);
+            super(Registries.STAT_TYPE);
         }
 
         @Override
@@ -160,8 +158,8 @@ public class StatisticRewriter {
         }
 
         @Override
-        protected EnumValue.Builder rewriteEnumValue(Holder.Reference<StatType<?>> reference) {
-            return super.rewriteEnumValue(reference)
+        protected void rewriteConstant(EnumConstant.Builder builder, Holder.Reference<StatType<?>> reference) {
+            builder
                 .rename(name -> FIELD_RENAMES.getOrDefault(name, name))
                 .argument("%s.withDefaultNamespace(%s)".formatted(ResourceLocation.class.getSimpleName(), quoted(reference.key().location().getPath())));
         }
