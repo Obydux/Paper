@@ -37,16 +37,4 @@ public class CraftArmadillo extends CraftAnimals implements Armadillo {
         this.getHandle().lastHurtByMob = null; // Clear this memory to not have the sensor trigger rollUp instantly for damaged armadillo
         this.getHandle().getBrain().setMemoryWithExpiry(MemoryModuleType.DANGER_DETECTED_RECENTLY, true, ArmadilloState.UNROLLING.animationDuration());
     }
-
-    public static State stateToBukkit(ArmadilloState state) {
-        return switch (state) {
-            // Start generate - CraftArmadillo#stateToBukkit
-            // @GeneratedFrom 1.21.5
-            case IDLE -> State.IDLE;
-            case ROLLING -> State.ROLLING;
-            case SCARED -> State.SCARED;
-            case UNROLLING -> State.UNROLLING;
-            // End generate - CraftArmadillo#stateToBukkit
-        };
-    }
 }

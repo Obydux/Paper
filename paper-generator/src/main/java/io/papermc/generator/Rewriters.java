@@ -15,7 +15,6 @@ import io.papermc.generator.rewriter.types.registry.RegistryFieldRewriter;
 import io.papermc.generator.rewriter.types.registry.RegistryTagRewriter;
 import io.papermc.generator.rewriter.types.registry.TagRewriter;
 import io.papermc.generator.rewriter.types.simple.BlockTypeRewriter;
-import io.papermc.generator.rewriter.types.simple.CraftArmadilloRewriter;
 import io.papermc.generator.rewriter.types.simple.CraftBlockDataMapping;
 import io.papermc.generator.rewriter.types.simple.CraftBlockEntityStateMapping;
 import io.papermc.generator.rewriter.types.simple.CraftItemMetasRewriter;
@@ -190,7 +189,6 @@ public final class Rewriters {
                 sameHolder("CraftPotionUtil#extendable", new CraftPotionUtilRewriter("long"))
             ))
             .register("PaperFeatureFlagProviderImpl#FLAGS", Types.PAPER_FEATURE_FLAG_PROVIDER_IMPL, new PaperFeatureFlagMapping())
-            .register("CraftArmadillo#stateToBukkit", Types.CRAFT_ARMADILLO, new CraftArmadilloRewriter())
             .register("MobGoalHelper#bukkitMap", Types.MOB_GOAL_HELPER, new SearchReplaceRewriter() {
                 @Override
                 protected void insert(SearchMetadata metadata, StringBuilder builder) {
