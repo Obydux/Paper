@@ -35,6 +35,10 @@ public class PoseRewriter extends EnumCloneRewriter<Pose> {
     private @MonotonicNonNull Map<String, CharSequenceBlockToken> javadocsPerConstant;
 
     private Map<String, CharSequenceBlockToken> parseConstantJavadocs(String content) {
+        if (content.isBlank()) {
+            return Map.of();
+        }
+
         Map<String, CharSequenceBlockToken> map = new HashMap<>();
 
         Lexer lex = new Lexer(content.toCharArray());

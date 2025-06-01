@@ -14,13 +14,13 @@ import java.util.Map;
 import java.util.Set;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
-public class VillagerProfessionRewriter extends RegistryFieldRewriter<VillagerProfession> {
+public class AttributeRewriter extends RegistryFieldRewriter<Attribute> {
 
-    public VillagerProfessionRewriter() {
-        super(Registries.VILLAGER_PROFESSION, "getProfession");
+    public AttributeRewriter() {
+        super(Registries.ATTRIBUTE, "getAttribute");
     }
 
     private static final Set<TokenType> FORMAT_TOKENS = EnumSet.of(
@@ -46,11 +46,11 @@ public class VillagerProfessionRewriter extends RegistryFieldRewriter<VillagerPr
                     .map(TokenType.JAVADOC, token -> { // /** */
                         constant.javadocs(((CharSequenceBlockToken) token));
                     }, TokenTaskBuilder::asOptional)
-                    .skip(TokenType.IDENTIFIER) // Profession
+                    .skip(TokenType.IDENTIFIER) // Attribute
                     .map(TokenType.IDENTIFIER, token -> { // <name>
                         constant.name(((CharSequenceToken) token).value());
                     })
-                    .skip(TokenType.IDENTIFIER) // getProfession
+                    .skip(TokenType.IDENTIFIER) // getAttribute
                     .skipClosure(TokenType.LPAREN, TokenType.RPAREN, true) // (*)
                     .map(TokenType.SECO, $ -> { // ;
                         if (constant.isComplete()) {
@@ -70,7 +70,7 @@ public class VillagerProfessionRewriter extends RegistryFieldRewriter<VillagerPr
     }
 
     @Override
-    protected void rewriteJavadocs(Holder.Reference<VillagerProfession> reference, String replacedContent, String indent, StringBuilder builder) {
+    protected void rewriteJavadocs(Holder.Reference<Attribute> reference, String replacedContent, String indent, StringBuilder builder) {
         String constantName = this.rewriteFieldName(reference);
         if (this.javadocsPerConstant.containsKey(constantName)) {
             CharSequenceBlockToken token = this.javadocsPerConstant.get(constantName);

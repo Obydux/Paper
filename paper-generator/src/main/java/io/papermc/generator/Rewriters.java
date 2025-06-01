@@ -25,6 +25,7 @@ import io.papermc.generator.rewriter.types.simple.MapPaletteRewriter;
 import io.papermc.generator.rewriter.types.simple.MaterialRewriter;
 import io.papermc.generator.rewriter.types.simple.MemoryKeyRewriter;
 import io.papermc.generator.rewriter.types.simple.StatisticRewriter;
+import io.papermc.generator.rewriter.types.simple.trial.AttributeRewriter;
 import io.papermc.generator.rewriter.types.simple.trial.PoseRewriter;
 import io.papermc.generator.rewriter.types.simple.trial.VillagerProfessionRewriter;
 import io.papermc.generator.rewriter.types.registry.RegistriesArgumentProviderRewriter;
@@ -160,7 +161,7 @@ public final class Rewriters {
             .register("PatternType", new RegistryFieldRewriter<>(Registries.BANNER_PATTERN, "getType"))
             .register("Biome", new RegistryFieldRewriter<>(Registries.BIOME, "getBiome"))
             .register("Fluid", new RegistryFieldRewriter<>(Registries.FLUID, "getFluid"))
-            // .register("Attribute", new RegistryFieldRewriter<>(Registries.ATTRIBUTE, "getAttribute")) - disable for now (javadocs)
+            .register("Attribute", new AttributeRewriter())
             .register("Sound", new RegistryFieldRewriter<>(Registries.SOUND_EVENT, "getSound"))
             .register("Art", new RegistryFieldRewriter<>(Registries.PAINTING_VARIANT, "getArt"))
             .register("ChickenVariant", new RegistryFieldRewriter<>(Registries.CHICKEN_VARIANT, "getVariant"))
