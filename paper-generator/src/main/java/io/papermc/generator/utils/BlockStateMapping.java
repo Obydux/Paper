@@ -143,7 +143,7 @@ public final class BlockStateMapping {
             String apiName = formatApiName(ExtraData.BLOCK_SUFFIX_INTENDED, statefulBlock);
             String implName = "Craft".concat(apiName); // before renames
 
-            apiName = Formatting.stripWordOfCamelCaseName(apiName, "Base", true);
+            apiName = Formatting.stripInitialWord(apiName, "Base");
             apiName = ExtraData.API_RENAMES.getOrDefault(apiName, apiName);
 
             ClassNamedView view = new ClassNamedView(rootDir.resolve("paper-api/src/main/java"), 1, "org/bukkit/block/data/type");
@@ -154,7 +154,7 @@ public final class BlockStateMapping {
                     // check deeper in the tree?
                     if (STATEFUL_BLOCKS.get(directParent).equals(entry.getValue())) {
                         String parentApiName = formatApiName(ExtraData.BLOCK_SUFFIX_INTENDED, directParent);
-                        parentApiName = Formatting.stripWordOfCamelCaseName(parentApiName, "Base", true);
+                        parentApiName = Formatting.stripInitialWord(parentApiName, "Base");
                         parentApiName = ExtraData.API_RENAMES.getOrDefault(parentApiName, parentApiName);
                         return view.tryFindFirst("org/bukkit/block/data/type/" + parentApiName);
                     }
@@ -199,7 +199,7 @@ public final class BlockStateMapping {
     public static String formatApiName(Set<Class<? extends Block>> withBlockSuffix, Class<?> specialBlock) {
         String apiName = specialBlock.getSimpleName();
         if (!withBlockSuffix.contains(specialBlock)) {
-            return apiName.substring(0, apiName.length() - "Block".length());
+            return Formatting.stripInitialWord(apiName, "Block", true);
         }
         return apiName;
     }

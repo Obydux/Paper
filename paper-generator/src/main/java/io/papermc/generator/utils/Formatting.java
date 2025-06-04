@@ -1,5 +1,6 @@
 package io.papermc.generator.utils;
 
+import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Comparator;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
@@ -21,6 +23,7 @@ public final class Formatting {
         return ILLEGAL_FIELD_CHARACTERS.matcher(path.toUpperCase(Locale.ENGLISH)).replaceAll("_");
     }
 
+    @ApiStatus.Obsolete
     public static String formatTagFieldPrefix(String name, ResourceKey<? extends Registry<?>> registryKey) {
         if (registryKey == Registries.BLOCK) {
             return "";
@@ -31,41 +34,58 @@ public final class Formatting {
         return name.toUpperCase(Locale.ENGLISH) + "_";
     }
 
-    public static Optional<String> formatTagKey(String tagDir, String resourcePath) {
+    public static Optional<String> findTagKeyPath(String tagDir, String resourcePath) {
         int tagsIndex = resourcePath.indexOf(tagDir);
         int dotIndex = resourcePath.lastIndexOf('.');
         if (tagsIndex == -1 || dotIndex == -1) {
             return Optional.empty();
         }
-        return Optional.of(resourcePath.substring(tagsIndex + tagDir.length() + 1, dotIndex)); // namespace/tags/registry_key/[tag_key].json
+        return Optional.of(resourcePath.substring(tagsIndex + tagDir.length() + 1, dotIndex)); // namespace/tags/registry_key/[tag_key_path].json
     }
 
     public static String quoted(String value) {
         return "\"" + value + "\"";
     }
 
-    public static String stripWordOfCamelCaseName(String name, String word, boolean onlyOnce) {
-        String newName = name;
-        int startIndex = 0;
-        while (true) {
-            int baseIndex = newName.indexOf(word, startIndex);
-            if (baseIndex == -1) {
-                return newName;
-            }
+    public static String stripInitialWord(String name, String word) { // both ends
+        if (name.startsWith(word)) {
+            return name.substring(word.length());
+        }
 
-            if ((baseIndex > 0 && !Character.isLowerCase(newName.charAt(baseIndex - 1))) ||
-                (baseIndex + word.length() < newName.length() && !Character.isUpperCase(newName.charAt(baseIndex + word.length())))) {
-                startIndex = baseIndex + word.length();
-                continue;
-            }
+        if (name.endsWith(word)) {
+            return name.substring(0, name.length() - word.length());
+        }
 
-            newName = newName.substring(0, baseIndex) + newName.substring(baseIndex + word.length());
-            startIndex = baseIndex;
-            if (onlyOnce) {
+        return name;
+    }
+
+    public static String stripInitialWord(String name, String word, boolean fromEnd) {
+        if (fromEnd) {
+            if (name.endsWith(word)) {
+                return name.substring(0, name.length() - word.length());
+            }
+        } else {
+            if (name.startsWith(word)) {
+                return name.substring(word.length());
+            }
+        }
+        return name;
+    }
+
+    public static String stripInitialWords(String name, List<String> words, boolean fromEnd) {
+        String foundWord = null;
+        for (String word : words) {
+            if (fromEnd ? name.endsWith(word) : name.startsWith(word)) {
+                foundWord = word;
                 break;
             }
         }
-        return newName;
+
+        if (foundWord != null) {
+            return fromEnd ? name.substring(0, name.length() - foundWord.length()) : name.substring(foundWord.length());
+        }
+
+        return name;
     }
 
     public static <T> Comparator<T> alphabeticKeyOrder(Function<T, String> mapper) {
@@ -77,7 +97,10 @@ public final class Formatting {
             OptionalInt trailingInt2 = tryParseTrailingInt(path2);
 
             if (trailingInt1.isPresent() && trailingInt2.isPresent()) {
-                return Integer.compare(trailingInt1.getAsInt(), trailingInt2.getAsInt());
+                int numericDelta = Integer.compare(trailingInt1.getAsInt(), trailingInt2.getAsInt());
+                if (numericDelta != 0) {
+                    return numericDelta;
+                }
             }
 
             return path1.compareTo(path2);

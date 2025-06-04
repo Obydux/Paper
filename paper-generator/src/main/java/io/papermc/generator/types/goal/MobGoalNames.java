@@ -8,6 +8,7 @@ import io.papermc.generator.types.Types;
 import io.papermc.generator.utils.Formatting;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -25,6 +26,8 @@ public final class MobGoalNames { // todo sync with MobGoalHelper ideally this s
         // TODO these kinda should be checked on each release, in case obfuscation changes
         deobfuscationMap.put("abstract_skeleton_1", "abstract_skeleton_melee");
     }
+
+    private static final List<String> IGNORED_SUFFIXES = List.of("TargetGoal", "Goal");
 
     private static String getPathName(String name) {
         String pathName = name.substring(name.lastIndexOf('.') + 1);
@@ -47,8 +50,7 @@ public final class MobGoalNames { // todo sync with MobGoalHelper ideally this s
             // mapped, wooo!
         }
 
-        pathName = Formatting.stripWordOfCamelCaseName(pathName, "TargetGoal", true); // replace last? reverse search?
-        pathName = Formatting.stripWordOfCamelCaseName(pathName, "Goal", true);
+        pathName = Formatting.stripInitialWords(pathName, IGNORED_SUFFIXES, true);
         pathName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, pathName);
 
         if (needDeobfMap && !deobfuscationMap.containsKey(pathName)) {
