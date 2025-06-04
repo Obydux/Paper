@@ -63,7 +63,7 @@ public sealed interface BlockPredicate permits BlockPredicate.ContainsPropertyPr
 
         public static final MapCodec<InstanceOfPredicate> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SourceCodecs.classCodec(Block.class).fieldOf("value").forGetter(InstanceOfPredicate::value),
-            BlockPropertyPredicate.CODEC.listOf().optionalFieldOf("properties", List.of()).forGetter(InstanceOfPredicate::propertyPredicates)
+            ExtraCodecs.compactListCodec(BlockPropertyPredicate.CODEC).optionalFieldOf("has_property", List.of()).forGetter(InstanceOfPredicate::propertyPredicates)
         ).apply(instance, InstanceOfPredicate::new));
 
         @Override
@@ -101,7 +101,7 @@ public sealed interface BlockPredicate permits BlockPredicate.ContainsPropertyPr
         ).apply(instance, ContainsPropertyPredicate::new));
 
         public static final MapCodec<ContainsPropertyPredicate> SINGLE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ExtraCodecs.nonEmptyList(BlockPropertyPredicate.CODEC.listOf()).fieldOf("value").forGetter(ContainsPropertyPredicate::value)
+            ExtraCodecs.compactListCodec(BlockPropertyPredicate.CODEC, ExtraCodecs.nonEmptyList(BlockPropertyPredicate.CODEC.listOf())).fieldOf("value").forGetter(ContainsPropertyPredicate::value)
         ).apply(instance, value -> new ContainsPropertyPredicate(value, 1, Strategy.AT_LEAST)));
 
         @Override

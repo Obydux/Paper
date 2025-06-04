@@ -143,7 +143,7 @@ public class DataFileLoader {
 
         // order matters: instance_of / is_class -> has_property -> contains_property
         register(DataFiles.BLOCK_STATE_PREDICATES, () -> Codec.unboundedMap(
-                SourceCodecs.CLASS_NAMED, ExtraCodecs.nonEmptyList(BlockPredicate.CODEC.listOf())
+                SourceCodecs.CLASS_NAMED, ExtraCodecs.compactListCodec(BlockPredicate.CODEC, ExtraCodecs.nonEmptyList(BlockPredicate.CODEC.listOf()))
             ),
             (path, codec) -> new DataFile.Map<>(
                 path, codec, SliceResult::empty
