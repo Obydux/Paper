@@ -79,7 +79,7 @@ public class GeneratedTagKeyType<T> extends SimpleGenerator implements RegistryI
         MethodSpec.Builder createMethod = this.createMethod(tagKeyType);
 
         AtomicBoolean allExperimental = new AtomicBoolean(true);
-        this.entry.registry().listTagIds().sorted(Formatting.alphabeticKeyOrder(tagKey -> tagKey.location().getPath())).forEach(tagKey -> {
+        this.entry.registry().listTagIds().sorted(Formatting.TAG_ORDER).forEach(tagKey -> {
             String fieldName = Formatting.formatKeyAsField(tagKey.location().getPath());
             FieldSpec.Builder fieldBuilder = FieldSpec.builder(tagKeyType, fieldName, PUBLIC, STATIC, FINAL)
                 .initializer("$N(key($S))", createMethod.build(), tagKey.location().getPath())

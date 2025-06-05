@@ -61,7 +61,7 @@ public class RegistryFieldRewriter<T> extends SearchReplaceRewriter implements R
         boolean isInterface = entry.data().api().type() == RegistryData.Api.Type.INTERFACE;
         Registry<T> registry = entry.registry();
         this.experimentalKeys = Suppliers.memoize(() -> ExperimentalCollector.collectDataDrivenElementIds(registry));
-        Iterator<Holder.Reference<T>> referenceIterator = registry.listElements().filter(this::canPrintField).sorted(Formatting.alphabeticKeyOrder(reference -> reference.key().location().getPath())).iterator();
+        Iterator<Holder.Reference<T>> referenceIterator = registry.listElements().filter(this::canPrintField).sorted(Formatting.HOLDER_ORDER).iterator();
 
         while (referenceIterator.hasNext()) {
             Holder.Reference<T> reference = referenceIterator.next();
