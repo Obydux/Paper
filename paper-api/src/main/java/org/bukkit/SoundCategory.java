@@ -5,6 +5,8 @@ package org.bukkit;
  */
 public enum SoundCategory implements net.kyori.adventure.sound.Sound.Source.Provider { // Paper - implement Sound.Source.Provider
 
+    // Start generate - SoundCategory
+    // @GeneratedFrom 1.21.5
     MASTER,
     MUSIC,
     RECORDS,
@@ -15,6 +17,7 @@ public enum SoundCategory implements net.kyori.adventure.sound.Sound.Source.Prov
     PLAYERS,
     AMBIENT,
     VOICE;
+    // End generate - SoundCategory
 
     // Paper start - implement Sound.Source.Provider
     @Override

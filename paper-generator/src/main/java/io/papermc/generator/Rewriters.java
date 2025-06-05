@@ -42,6 +42,7 @@ import javax.lang.model.SourceVersion;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Panda;
@@ -113,6 +114,7 @@ public final class Rewriters {
             .register("FoxType", Types.FOX_TYPE, new EnumCloneRewriter<>(Fox.Variant.class))
             .register("SalmonVariant", Types.SALMON_VARIANT, new EnumCloneRewriter<>(Salmon.Variant.class))
             .register("ArmadilloState", Types.ARMADILLO_STATE, new EnumCloneRewriter<>(Armadillo.ArmadilloState.class))
+            .register("SoundCategory", Types.SOUND_CATEGORY, new EnumCloneRewriter<>(SoundSource.class))
             .register("ItemUseAnimation", Types.ITEM_USE_ANIMATION, new EnumCloneRewriter<>(ItemUseAnimation.class))
             .register("ItemRarity", Types.ITEM_RARITY, new EnumCloneRewriter<>(Rarity.class) {
                 @Override

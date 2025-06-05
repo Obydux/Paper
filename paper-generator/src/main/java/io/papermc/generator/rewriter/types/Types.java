@@ -71,6 +71,8 @@ public final class Types {
 
     public static final ClassNamed DISPLAY_SLOT = BUKKIT.relativeClassNamed("scoreboard", "DisplaySlot");
 
+    public static final ClassNamed SOUND_CATEGORY = BUKKIT.rootClassNamed("SoundCategory");
+
     public static final ClassNamed DAMAGE_TYPE_TAGS = BUKKIT.relativeClassNamed("tag", "DamageTypeTags");
 
     public static final ClassNamed BLOCK_DATA = BUKKIT.relativeClassNamed("block.data", "BlockData");
