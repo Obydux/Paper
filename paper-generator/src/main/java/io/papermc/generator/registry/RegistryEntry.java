@@ -75,7 +75,7 @@ public class RegistryEntry<T> implements RegistryIdentifiable<T> {
     }
 
     public boolean allowCustomKeys() {
-        return this.data.builder().isPresent() || RegistryEntries.byType(Type.DATA_DRIVEN).contains(this);
+        return (this.data.builder().isPresent() && this.data.builder().get().capability().canAdd()) || RegistryEntries.byType(Type.DATA_DRIVEN).contains(this);
     }
 
     private <TO> Map<ResourceKey<T>, TO> getFields(Map<ResourceKey<T>, TO> map, Function<Field, @Nullable TO> transform) {

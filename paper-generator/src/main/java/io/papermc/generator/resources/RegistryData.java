@@ -112,6 +112,10 @@ public record RegistryData(
                 this.name = name;
             }
 
+            public boolean canAdd() {
+                return this != MODIFIABLE && this != NONE;
+            }
+
             @Override
             public String getSerializedName() {
                 return this.name;
