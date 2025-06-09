@@ -56,7 +56,8 @@
   },
   "minecraft:attribute": {
     "api": "org.bukkit.attribute.Attribute",
-    "impl": "org.bukkit.craftbukkit.attribute.CraftAttribute"
+    "impl": "org.bukkit.craftbukkit.attribute.CraftAttribute",
+    "serialization_updater_field": "ATTRIBUTE_RENAME"
   },
   "minecraft:fluid": {
     "api": "org.bukkit.Fluid",
