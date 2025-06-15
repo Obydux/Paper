@@ -1,8 +1,11 @@
 package io.papermc.paper.registry.data.dialog;
 
 import io.papermc.paper.registry.PaperRegistryBuilder;
+import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.data.dialog.specialty.DialogSpecialty;
 import io.papermc.paper.registry.data.util.Conversions;
+import io.papermc.paper.registry.set.RegistryValueSetBuilder;
+import io.papermc.paper.registry.set.RegistryValueSetBuilderImpl;
 import net.minecraft.server.dialog.CommonDialogData;
 import net.minecraft.server.dialog.Dialog;
 import org.jspecify.annotations.Nullable;
@@ -44,6 +47,11 @@ public class PaperDialogRegistryEntry implements DialogRegistryEntry {
 
         public PaperBuilder(final Conversions conversions, final @Nullable Dialog internal) {
             super(conversions, internal);
+        }
+
+        @Override
+        public RegistryValueSetBuilder<io.papermc.paper.dialog.Dialog, Builder> registryValueSetBuilder() {
+            return new RegistryValueSetBuilderImpl<>(RegistryKey.DIALOG, this.conversions);
         }
 
         @Override

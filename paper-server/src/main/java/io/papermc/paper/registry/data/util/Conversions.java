@@ -8,6 +8,7 @@ import io.papermc.paper.adventure.WrapperAwareSerializer;
 import io.papermc.paper.registry.PaperRegistries;
 import io.papermc.paper.registry.PaperRegistryBuilder;
 import io.papermc.paper.registry.PaperRegistryBuilderFactory;
+import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.entry.RegistryEntryMeta;
 import java.util.function.Consumer;
@@ -85,20 +86,20 @@ public class Conversions {
         );
     }
 
-    private static <M, A extends Keyed, B extends PaperRegistryBuilder<M, A>> RegistryEntryMeta.Buildable<M, A, B> getDirectHolderBuildableMeta(final ResourceKey<? extends Registry<M>> registryKey) {
+    private static <M, A extends Keyed, B extends PaperRegistryBuilder<M, A>> RegistryEntryMeta.Buildable<M, A, B> getDirectHolderBuildableMeta(final RegistryKey<A> registryKey) {
         final RegistryEntryMeta.Buildable<M, A, B> buildableMeta = PaperRegistries.getBuildableMeta(registryKey);
         Preconditions.checkArgument(buildableMeta.registryTypeMapper().supportsDirectHolders(), "Registry type mapper must support direct holders");
         return buildableMeta;
     }
 
-    public <M, A extends Keyed, B extends PaperRegistryBuilder<M, A>> A createApiInstanceFromBuilder(final ResourceKey<? extends Registry<M>> registryKey, final Consumer<? super PaperRegistryBuilderFactory<M, A, B>> value) {
+    public <M, A extends Keyed, B extends PaperRegistryBuilder<M, A>> A createApiInstanceFromBuilder(final RegistryKey<A> registryKey, final Consumer<? super PaperRegistryBuilderFactory<M, A, B>> value) {
         final RegistryEntryMeta.Buildable<M, A, B> meta = getDirectHolderBuildableMeta(registryKey);
         final PaperRegistryBuilderFactory<M, A, B> builderFactory = this.createRegistryBuilderFactory(registryKey, meta);
         value.accept(builderFactory);
         return meta.registryTypeMapper().createBukkit(Holder.direct(builderFactory.requireBuilder().build()));
     }
 
-    public <M, A extends Keyed, B extends PaperRegistryBuilder<M, A>> Holder<M> createHolderFromBuilder(final ResourceKey<? extends Registry<M>> registryKey, final Consumer<? super PaperRegistryBuilderFactory<M, A, B>> value) {
+    public <M, A extends Keyed, B extends PaperRegistryBuilder<M, A>> Holder<M> createHolderFromBuilder(final RegistryKey<A> registryKey, final Consumer<? super PaperRegistryBuilderFactory<M, A, B>> value) {
         final RegistryEntryMeta.Buildable<M, A, B> meta = getDirectHolderBuildableMeta(registryKey);
         final PaperRegistryBuilderFactory<M, A, B> builderFactory = this.createRegistryBuilderFactory(registryKey, meta);
         value.accept(builderFactory);
@@ -106,11 +107,12 @@ public class Conversions {
     }
 
     private <M, A extends Keyed, B extends PaperRegistryBuilder<M, A>> PaperRegistryBuilderFactory<M, A, B> createRegistryBuilderFactory(
-        final ResourceKey<? extends Registry<M>> registryKey,
+        final RegistryKey<A> registryKey,
         final RegistryEntryMeta.Buildable<M, A, B> buildableMeta
     ) {
-        final HolderLookup.RegistryLookup<M> lookupForBuilders = this.lookup.lookupForValueCopyViaBuilders().lookupOrThrow(registryKey);
-        return new PaperRegistryBuilderFactory<>(registryKey, this, buildableMeta.builderFiller(), lookupForBuilders::getValueForCopying);
+        final ResourceKey<? extends Registry<M>> resourceRegistryKey = PaperRegistries.registryToNms(registryKey);
+        final HolderLookup.RegistryLookup<M> lookupForBuilders = this.lookup.lookupForValueCopyViaBuilders().lookupOrThrow(resourceRegistryKey);
+        return new PaperRegistryBuilderFactory<>(resourceRegistryKey, this, buildableMeta.builderFiller(), lookupForBuilders::getValueForCopying);
     }
 
 }
