@@ -58,7 +58,7 @@ public class RegistryFieldRewriter<T> extends SearchReplaceRewriter implements R
     @Override
     protected void insert(SearchMetadata metadata, StringBuilder builder) {
         RegistryEntry<T> entry = RegistryEntries.byRegistryKey(this.registryKey);
-        boolean isInterface = entry.data().api().type() == RegistryData.Api.Type.INTERFACE;
+        boolean isInterface = entry.data().api().klass().type() == RegistryData.Api.Class.Type.INTERFACE;
         Registry<T> registry = entry.registry();
         this.experimentalKeys = Suppliers.memoize(() -> ExperimentalCollector.collectDataDrivenElementIds(registry));
         Iterator<Holder.Reference<T>> referenceIterator = registry.listElements().filter(this::canPrintField).sorted(Formatting.HOLDER_ORDER).iterator();

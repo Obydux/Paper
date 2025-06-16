@@ -38,7 +38,7 @@ public class TagRewriter extends SearchReplaceRewriter {
 
     private record TagRegistry(String legacyFolderName, ClassNamed apiType, ResourceKey<? extends Registry<?>> registryKey) {
         public TagRegistry(String legacyFolderName, ResourceKey<? extends Registry<?>> registryKey) {
-            this(legacyFolderName, RegistryEntries.BY_REGISTRY_KEY.get(registryKey).data().api().klass(), registryKey);
+            this(legacyFolderName, RegistryEntries.BY_REGISTRY_KEY.get(registryKey).data().api().klass().name(), registryKey);
         }
     }
 

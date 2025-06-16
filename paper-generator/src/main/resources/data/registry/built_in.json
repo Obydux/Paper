@@ -1,8 +1,10 @@
 {
   "minecraft:game_event": {
     "api": {
-      "class": "org.bukkit.GameEvent",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "org.bukkit.GameEvent"
+      }
     },
     "impl": "org.bukkit.craftbukkit.CraftGameEvent",
     "builder": {
@@ -12,15 +14,19 @@
   },
   "minecraft:worldgen/structure_type": {
     "api": {
-      "class": "org.bukkit.generator.structure.StructureType",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "org.bukkit.generator.structure.StructureType"
+      }
     },
     "impl": "org.bukkit.craftbukkit.generator.structure.CraftStructureType"
   },
   "minecraft:mob_effect": {
     "api": {
-      "class": "org.bukkit.potion.PotionEffectType",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "org.bukkit.potion.PotionEffectType"
+      }
     },
     "impl": "org.bukkit.craftbukkit.potion.CraftPotionEffectType"
   },
@@ -73,9 +79,11 @@
   },
   "minecraft:data_component_type": {
     "api": {
-      "class": "io.papermc.paper.datacomponent.DataComponentType",
-      "holders": "io.papermc.paper.datacomponent.DataComponentTypes",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "io.papermc.paper.datacomponent.DataComponentType"
+      },
+      "holders": "io.papermc.paper.datacomponent.DataComponentTypes"
     },
     "impl": {
       "class": "io.papermc.paper.datacomponent.PaperDataComponentType",
@@ -84,29 +92,37 @@
   },
   "minecraft:entity_type": {
     "api": {
-      "class": "org.bukkit.entity.EntityType",
-      "type": "enum"
+      "class": {
+        "type": "enum",
+        "name": "org.bukkit.entity.EntityType"
+      }
     },
     "impl": "org.bukkit.craftbukkit.entity.CraftEntityType"
   },
   "minecraft:particle_type": {
     "api": {
-      "class": "org.bukkit.Particle",
-      "type": "enum"
+      "class": {
+        "type": "enum",
+        "name": "org.bukkit.Particle"
+      }
     },
     "impl": "org.bukkit.craftbukkit.CraftParticle"
   },
   "minecraft:potion": {
     "api": {
-      "class": "org.bukkit.potion.PotionType",
-      "type": "enum"
+      "class": {
+        "type": "enum",
+        "name": "org.bukkit.potion.PotionType"
+      }
     },
     "impl": "org.bukkit.craftbukkit.potion.CraftPotionType"
   },
   "minecraft:memory_module_type": {
     "api": {
-      "class": "org.bukkit.entity.memory.MemoryKey",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "org.bukkit.entity.memory.MemoryKey"
+      }
     },
     "impl": "org.bukkit.craftbukkit.entity.memory.CraftMemoryKey"
   }

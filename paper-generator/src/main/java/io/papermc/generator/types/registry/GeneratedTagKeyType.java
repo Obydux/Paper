@@ -55,7 +55,7 @@ public class GeneratedTagKeyType<T> extends SimpleGenerator implements RegistryI
             .returns(returnType);
         if (publicCreateKeyMethod) {
             create.addAnnotation(EXPERIMENTAL_API_ANNOTATION); // TODO remove once not experimental
-            create.addJavadoc(Javadocs.CREATED_TAG_KEY_JAVADOC, Types.typed(this.entry.data().api().klass()), this.entry.getRegistryKey().location().toString());
+            create.addJavadoc(Javadocs.CREATED_TAG_KEY_JAVADOC, Types.typed(this.entry.data().api().klass().name()), this.entry.getRegistryKey().location().toString());
         }
         return create;
     }
@@ -73,7 +73,7 @@ public class GeneratedTagKeyType<T> extends SimpleGenerator implements RegistryI
 
     @Override
     protected TypeSpec getTypeSpec() {
-        TypeName tagKeyType = ParameterizedTypeName.get(Types.TAG_KEY, this.entry.data().api().getType());
+        TypeName tagKeyType = ParameterizedTypeName.get(Types.TAG_KEY, this.entry.data().api().klass().getType());
 
         TypeSpec.Builder typeBuilder = this.keyHolderType();
         MethodSpec.Builder createMethod = this.createMethod(tagKeyType);

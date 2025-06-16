@@ -65,7 +65,7 @@ public class GeneratedKeyType<T> extends SimpleGenerator implements RegistryIden
             .addCode("return $T.create($T.$L, $N);", Types.TYPED_KEY, Types.REGISTRY_KEY, this.entry.registryKeyField(), keyParam)
             .returns(returnType);
         if (publicCreateKeyMethod) {
-            create.addJavadoc(Javadocs.CREATE_TYPED_KEY_JAVADOC, Types.typed(this.entry.data().api().klass()), this.entry.getRegistryKey().location().toString());
+            create.addJavadoc(Javadocs.CREATE_TYPED_KEY_JAVADOC, Types.typed(this.entry.data().api().klass().name()), this.entry.getRegistryKey().location().toString());
         }
         return create;
     }
@@ -83,7 +83,7 @@ public class GeneratedKeyType<T> extends SimpleGenerator implements RegistryIden
 
     @Override
     protected TypeSpec getTypeSpec() {
-        TypeName typedKeyType = ParameterizedTypeName.get(Types.TYPED_KEY, this.entry.data().api().getType());
+        TypeName typedKeyType = ParameterizedTypeName.get(Types.TYPED_KEY, this.entry.data().api().klass().getType());
 
         TypeSpec.Builder typeBuilder = this.keyHolderType();
         MethodSpec.Builder createMethod = this.createMethod(typedKeyType);

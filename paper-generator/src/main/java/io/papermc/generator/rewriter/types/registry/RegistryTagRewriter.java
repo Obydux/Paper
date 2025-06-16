@@ -51,7 +51,7 @@ public class RegistryTagRewriter<T> extends SearchReplaceRewriter implements Reg
             builder.append(metadata.indent());
             builder.append("%s %s %s ".formatted(PUBLIC, STATIC, FINAL));
 
-            builder.append("%s<%s>".formatted(Types.TAG.simpleName(), entry.data().api().klass().simpleName())).append(' ').append(this.rewriteFieldName(tagKey));
+            builder.append("%s<%s>".formatted(Types.TAG.simpleName(), entry.data().api().klass().name().simpleName())).append(' ').append(this.rewriteFieldName(tagKey));
             builder.append(" = ");
             builder.append(this.rewriteFieldValue(tagKey));
             builder.append(';');

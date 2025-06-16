@@ -24,7 +24,7 @@ public class PaperRegistriesRewriter extends SearchReplaceRewriter {
         RegistryData data = entry.data();
         if (apiOnly) {
             builder.append("apiOnly(");
-            if (data.api().type() == RegistryData.Api.Type.ENUM) {
+            if (data.api().klass().type() == RegistryData.Api.Class.Type.ENUM) {
                 builder.append(this.importCollector.getShortName(Types.PAPER_SIMPLE_REGISTRY)).append("::").append(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, entry.getRegistryKey().location().getPath()));
             } else {
                 builder.append("() -> ");
@@ -33,7 +33,7 @@ public class PaperRegistriesRewriter extends SearchReplaceRewriter {
             builder.append(')');
         } else {
             builder.append("craft(");
-            builder.append(this.importCollector.getShortName(data.api().holders().orElse(data.api().klass()))).append(".class");
+            builder.append(this.importCollector.getShortName(data.api().holders().orElse(data.api().klass().name()))).append(".class");
             builder.append(", ");
 
             builder.append(this.importCollector.getShortName(data.impl().klass())).append("::").append(data.impl().instanceMethod().equals(ConstantDescs.INIT_NAME) ? "new" : data.impl().instanceMethod());

@@ -12,7 +12,7 @@ import org.jspecify.annotations.NullMarked;
 public interface PatternSourceSetRewriter extends SourceSetRewriter<PatternSourceSetRewriter> {
 
     default <E, T extends SearchReplaceRewriter & RegistryIdentifiable<E>> PatternSourceSetRewriter register(String pattern, T rewriter) {
-        return this.register(pattern, RegistryEntries.byRegistryKey(rewriter.getRegistryKey()).data().api().klass(), rewriter);
+        return this.register(pattern, RegistryEntries.byRegistryKey(rewriter.getRegistryKey()).data().api().klass().name(), rewriter);
     }
 
     PatternSourceSetRewriter register(String pattern, ClassNamed targetClass, SearchReplaceRewriter rewriter);

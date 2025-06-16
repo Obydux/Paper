@@ -20,7 +20,7 @@ public record RewriterHolder(String pattern, @Nullable ClassNamed targetClass, S
 
     @Contract(value = "_, _ -> new", pure = true)
     public static <E, T extends SearchReplaceRewriter & RegistryIdentifiable<E>> RewriterHolder holder(String pattern, T rewriter) {
-        return new RewriterHolder(pattern, RegistryEntries.byRegistryKey(rewriter.getRegistryKey()).data().api().klass(), rewriter);
+        return new RewriterHolder(pattern, RegistryEntries.byRegistryKey(rewriter.getRegistryKey()).data().api().klass().name(), rewriter);
     }
 
     @Contract(value = "_, _ -> new", pure = true)

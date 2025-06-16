@@ -8,8 +8,10 @@
   },
   "minecraft:worldgen/structure": {
     "api": {
-      "class": "org.bukkit.generator.structure.Structure",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "org.bukkit.generator.structure.Structure"
+      }
     },
     "impl": {
       "class": "org.bukkit.craftbukkit.generator.structure.CraftStructure",
@@ -60,8 +62,10 @@
   },
   "minecraft:enchantment": {
     "api": {
-      "class": "org.bukkit.enchantments.Enchantment",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "org.bukkit.enchantments.Enchantment"
+      }
     },
     "impl": {
       "class": "org.bukkit.craftbukkit.enchantments.CraftEnchantment",
@@ -109,8 +113,10 @@
   },
   "minecraft:instrument": {
     "api": {
-      "class": "org.bukkit.MusicInstrument",
-      "type": "class"
+      "class": {
+        "type": "class",
+        "name": "org.bukkit.MusicInstrument"
+      }
     },
     "impl": {
       "class": "org.bukkit.craftbukkit.CraftMusicInstrument",

@@ -68,7 +68,7 @@ public class RegistryEntry<T> implements RegistryIdentifiable<T> {
 
     public String keyClassName() {
         if (this.data.api().keyClassNameRelate()) {
-            return this.data.api().klass().simpleName();
+            return this.data.api().klass().name().simpleName();
         }
 
         return this.elementClass().getSimpleName();

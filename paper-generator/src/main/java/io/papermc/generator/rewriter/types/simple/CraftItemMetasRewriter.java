@@ -25,7 +25,7 @@ public class CraftItemMetasRewriter extends SearchReplaceRewriter {
     @Override
     protected void insert(SearchMetadata metadata, StringBuilder builder) {
         IndentUnit indentUnit = this.indentUnit();
-        ClassNamed itemType = RegistryEntries.byRegistryKey(Registries.ITEM).data().api().klass();
+        ClassNamed itemType = RegistryEntries.byRegistryKey(Registries.ITEM).data().api().klass().name();
         for (Map.Entry<ClassNamed, List<ItemPredicate>> entry : DataFileLoader.get(DataFiles.ITEM_META_PREDICATES).entrySet()) {
             String field = DataFileLoader.get(DataFiles.ITEM_META_BRIDGE).get(entry.getKey()).field();
             Iterator<ItemPredicate> predicateIterator = entry.getValue().iterator();

@@ -11,6 +11,7 @@ import com.mojang.serialization.JsonOps;
 import io.papermc.generator.registry.RegistryEntry;
 import io.papermc.generator.resources.DataFile;
 import io.papermc.generator.resources.DataFileLoader;
+import io.papermc.generator.utils.ParameterizedClass;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -128,10 +129,12 @@ public class RoundtripCodecTest extends BootstrapTest {
                 Registries.BLOCK_ENTITY_TYPE,
                 new RegistryData(
                     new RegistryData.Api(
-                        BUKKIT.rootClassNamed("BlockEntityType"),
+                        new RegistryData.Api.Class(
+                            RegistryData.Api.Class.Type.INTERFACE,
+                            BUKKIT.rootClassNamed("BlockEntityType"),
+                            List.of(new ParameterizedClass(BUKKIT.rootClassNamed("SuperClass")))
+                        ),
                         Optional.of(BUKKIT.rootClassNamed("BlockEntityTypes")),
-                        RegistryData.Api.Type.INTERFACE,
-                        Optional.of(List.of(new RegistryData.Api.ParentClass(BUKKIT.rootClassNamed("SuperClass")))),
                         true,
                         Optional.of("BLOCK_ENTITY_TYPE")
                     ),
@@ -149,14 +152,16 @@ public class RoundtripCodecTest extends BootstrapTest {
                 Registries.ATTRIBUTE,
                 new RegistryData(
                     new RegistryData.Api(
-                        BUKKIT.rootClassNamed("Attribute"),
-                        Optional.of(BUKKIT.rootClassNamed("Attributes")),
-                        Util.getRandom(RegistryData.Api.Type.values(), randomSource),
-                        Optional.of(List.of(new RegistryData.Api.ParentClass(BUKKIT.rootClassNamed("SuperClass"),
-                            Optional.of(List.of(
-                                new RegistryData.Api.ParentClass(BUKKIT.rootClassNamed("SuperClass2"))
+                        new RegistryData.Api.Class(
+                            Util.getRandom(RegistryData.Api.Class.Type.values(), randomSource),
+                            BUKKIT.rootClassNamed("Attribute"),
+                            List.of(new ParameterizedClass(BUKKIT.rootClassNamed("SuperClass"),
+                                List.of(
+                                    new ParameterizedClass(BUKKIT.rootClassNamed("SuperClass2"))
+                                )
                             ))
-                        ))),
+                        ),
+                        Optional.of(BUKKIT.rootClassNamed("Attributes")),
                         random.nextBoolean(),
                         Optional.of("ATTRIBUTE")
                     ),

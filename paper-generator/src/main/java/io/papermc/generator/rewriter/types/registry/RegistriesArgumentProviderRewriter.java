@@ -24,7 +24,7 @@ public class RegistriesArgumentProviderRewriter extends SearchReplaceRewriter {
                 "%s.%s, %s.class, %s.%s, %s.class, %s.class, %s".formatted(
                 Types.REGISTRY_KEY.simpleName(),
                 entry.registryKeyField(),
-                this.importCollector.getShortName(entry.data().api().klass()),
+                this.importCollector.getShortName(entry.data().api().klass().name()),
                 Registries.class.getSimpleName(),
                 entry.registryKeyField(),
                 this.importCollector.getShortName(entry.data().impl().klass()),
