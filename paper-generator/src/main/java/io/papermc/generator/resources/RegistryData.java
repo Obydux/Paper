@@ -3,10 +3,18 @@ package io.papermc.generator.resources;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import java.lang.constant.ConstantDescs;
-import java.util.Optional;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.WildcardTypeName;
+import io.papermc.generator.types.Types;
 import io.papermc.generator.utils.SourceCodecs;
 import io.papermc.typewriter.ClassNamed;
+import java.lang.constant.ConstantDescs;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.StringRepresentable;
 import org.jspecify.annotations.NullMarked;
 
@@ -27,15 +35,16 @@ public record RegistryData(
         Codec.BOOL.optionalFieldOf("allow_inline", false).forGetter(RegistryData::allowInline)
     ).apply(instance, RegistryData::new));
 
-    public record Api(ClassNamed klass, Optional<ClassNamed> holders, Type type, boolean keyClassNameRelate, Optional<String> registryField) {
+    public record Api(ClassNamed klass, Optional<ClassNamed> holders, Type type, Optional<List<ParentClass>> parentClasses, boolean keyClassNameRelate, Optional<String> registryField) {
         public Api(ClassNamed klass) {
-            this(klass, Optional.of(klass), Type.INTERFACE, false, Optional.empty());
+            this(klass, Optional.of(klass), Type.INTERFACE, Optional.empty(), false, Optional.empty());
         }
 
         public static final Codec<Api> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             SourceCodecs.CLASS_NAMED.fieldOf("class").forGetter(Api::klass),
             SourceCodecs.CLASS_NAMED.optionalFieldOf("holders").forGetter(Api::holders),
             Type.CODEC.optionalFieldOf("type", Type.INTERFACE).forGetter(Api::type),
+            ExtraCodecs.compactListCodec(ParentClass.CODEC, ExtraCodecs.nonEmptyList(ParentClass.CODEC.listOf())).optionalFieldOf("extends").forGetter(Api::parentClasses),
             Codec.BOOL.optionalFieldOf("key_class_name_relate", false).forGetter(Api::keyClassNameRelate),
             SourceCodecs.IDENTIFIER.optionalFieldOf("registry_field").forGetter(Api::registryField)
         ).apply(instance, Api::new));
@@ -49,6 +58,19 @@ public record RegistryData(
             }
             return Either.right(api);
         });
+
+        public TypeName getType() {
+            ClassName klass = Types.typed(this.klass);
+            if (this.parentClasses.isPresent()) {
+                List<ParentClass> arguments = this.parentClasses.get();
+                TypeName[] args = new TypeName[arguments.size()];
+                for (int i = 0; i < arguments.size(); i ++) {
+                    args[i] = WildcardTypeName.subtypeOf(arguments.get(i).getType());
+                }
+                return ParameterizedTypeName.get(klass, args);
+            }
+            return klass;
+        }
 
         public enum Type implements StringRepresentable {
             INTERFACE("interface"),
@@ -66,6 +88,45 @@ public record RegistryData(
             @Override
             public String getSerializedName() {
                 return this.name;
+            }
+        }
+
+        public record ParentClass(ClassNamed klass, Optional<List<ParentClass>> arguments) {
+            public ParentClass(ClassNamed value) {
+                this(value, Optional.empty());
+            }
+
+            public static final Codec<ParentClass> CLASS_ONLY_CODEC = SourceCodecs.CLASS_NAMED.xmap(ParentClass::new, ParentClass::klass);
+
+            private static Codec<ParentClass> directCodec(Codec<ParentClass> codec) {
+                return RecordCodecBuilder.create(instance -> instance.group(
+                    SourceCodecs.CLASS_NAMED.fieldOf("class").forGetter(ParentClass::klass),
+                    ExtraCodecs.compactListCodec(codec, ExtraCodecs.nonEmptyList(codec.listOf())).optionalFieldOf("arguments").forGetter(ParentClass::arguments)
+                ).apply(instance, ParentClass::new));
+            }
+
+            public static final Codec<ParentClass> CODEC = Codec.recursive("ParentClasses", codec -> {
+                return Codec.either(CLASS_ONLY_CODEC, directCodec(codec)).xmap(Either::unwrap, parentClass -> {
+                    if (parentClass.arguments().isEmpty()) {
+                        return Either.left(parentClass);
+                    }
+                    return Either.right(parentClass);
+                });
+            });
+
+            public TypeName getType() {
+                ClassName from = Types.typed(this.klass);
+                if (this.arguments.isPresent()) {
+                    List<ParentClass> args = this.arguments.get();
+                    List<TypeName> arguments = new ArrayList<>(args.size());
+                    for (ParentClass arg : args) {
+                        arguments.add(arg.getType());
+                    }
+
+                    return ParameterizedTypeName.get(from, arguments.toArray(TypeName[]::new));
+                }
+
+                return from;
             }
         }
     }

@@ -4,13 +4,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.papermc.generator.utils.SourceCodecs;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jspecify.annotations.NullMarked;
-import java.util.List;
-import java.util.Set;
 
 @NullMarked
 public sealed interface BlockPredicate permits BlockPredicate.ContainsPropertyPredicate, BlockPredicate.InstanceOfPredicate, BlockPredicate.IsClassPredicate {

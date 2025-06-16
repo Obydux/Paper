@@ -4,9 +4,9 @@ import com.mojang.logging.LogUtils;
 import com.squareup.javapoet.MethodSpec;
 import io.papermc.generator.utils.Annotations;
 import io.papermc.typewriter.ClassNamed;
+import java.util.Arrays;
 import org.jspecify.annotations.NullMarked;
 import org.slf4j.Logger;
-import java.util.Arrays;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
 

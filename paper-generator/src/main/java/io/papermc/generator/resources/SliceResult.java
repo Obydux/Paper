@@ -1,8 +1,8 @@
 package io.papermc.generator.resources;
 
-import org.jspecify.annotations.NullMarked;
 import java.util.Collections;
 import java.util.Set;
+import org.jspecify.annotations.NullMarked;
 
 @NullMarked
 public record SliceResult<A, R>(Set<A> added, Set<R> removed) {

@@ -6,12 +6,12 @@ import io.papermc.generator.rewriter.types.Types;
 import io.papermc.generator.rewriter.types.registry.RegistryFieldRewriter;
 import io.papermc.generator.utils.predicate.ItemPredicate;
 import io.papermc.typewriter.ClassNamed;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import java.util.List;
-import java.util.Map;
 
 @Deprecated // bad generic
 public class ItemTypeRewriter extends RegistryFieldRewriter<Item> {

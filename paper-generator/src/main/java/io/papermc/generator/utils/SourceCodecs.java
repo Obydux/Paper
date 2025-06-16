@@ -8,6 +8,8 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.squareup.javapoet.ClassName;
 import io.papermc.typewriter.ClassNamed;
+import java.util.Optional;
+import java.util.function.Predicate;
 import javax.lang.model.SourceVersion;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -18,8 +20,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import org.jspecify.annotations.NullMarked;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 @NullMarked
 public final class SourceCodecs {

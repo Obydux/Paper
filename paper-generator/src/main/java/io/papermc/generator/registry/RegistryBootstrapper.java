@@ -7,8 +7,8 @@ import io.papermc.generator.rewriter.types.registry.RegistryEventsRewriter;
 import io.papermc.generator.types.SourceGenerator;
 import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.registry.GeneratedTagKeyType;
-import java.util.List;
 import io.papermc.generator.utils.BasePackage;
+import java.util.List;
 import net.minecraft.core.registries.Registries;
 import org.jspecify.annotations.NullMarked;
 

@@ -5,13 +5,13 @@ import io.papermc.generator.registry.RegistryEntry;
 import io.papermc.generator.utils.predicate.BlockPredicate;
 import io.papermc.generator.utils.predicate.ItemPredicate;
 import io.papermc.typewriter.ClassNamed;
+import java.util.List;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import java.util.List;
 
 public final class DataFiles {
 

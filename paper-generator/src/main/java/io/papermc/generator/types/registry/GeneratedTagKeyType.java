@@ -73,7 +73,7 @@ public class GeneratedTagKeyType<T> extends SimpleGenerator implements RegistryI
 
     @Override
     protected TypeSpec getTypeSpec() {
-        TypeName tagKeyType = ParameterizedTypeName.get(Types.TAG_KEY, Types.typed(this.entry.data().api().klass()));
+        TypeName tagKeyType = ParameterizedTypeName.get(Types.TAG_KEY, this.entry.data().api().getType());
 
         TypeSpec.Builder typeBuilder = this.keyHolderType();
         MethodSpec.Builder createMethod = this.createMethod(tagKeyType);

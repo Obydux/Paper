@@ -7,6 +7,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import io.papermc.generator.resources.DataFileLoader;
 import io.papermc.generator.resources.DataFiles;
 import io.papermc.generator.types.Types;
 import io.papermc.generator.types.craftblockdata.CraftBlockDataGenerator;
@@ -14,7 +15,6 @@ import io.papermc.generator.types.craftblockdata.property.converter.ConverterBas
 import io.papermc.generator.types.craftblockdata.property.holder.appender.DataAppenders;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.CommonVariable;
-import io.papermc.generator.resources.DataFileLoader;
 import io.papermc.generator.utils.NamingManager;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

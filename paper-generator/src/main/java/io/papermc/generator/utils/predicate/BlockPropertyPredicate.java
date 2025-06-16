@@ -6,13 +6,12 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.SourceCodecs;
+import java.util.function.Predicate;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jspecify.annotations.NullMarked;
-
-import java.util.function.Predicate;
 
 @NullMarked
 public sealed interface BlockPropertyPredicate permits BlockPropertyPredicate.IsFieldPredicate, BlockPropertyPredicate.IsNamePredicate {

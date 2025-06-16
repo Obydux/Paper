@@ -1,7 +1,7 @@
 package io.papermc.generator.rewriter.types.registry;
 
-import io.papermc.generator.resources.RegistryData;
 import io.papermc.generator.registry.RegistryEntries;
+import io.papermc.generator.resources.RegistryData;
 import io.papermc.generator.rewriter.types.Types;
 import io.papermc.typewriter.replace.SearchMetadata;
 import io.papermc.typewriter.replace.SearchReplaceRewriter;

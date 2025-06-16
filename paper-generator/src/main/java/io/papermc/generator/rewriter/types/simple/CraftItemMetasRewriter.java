@@ -10,14 +10,14 @@ import io.papermc.typewriter.ClassNamed;
 import io.papermc.typewriter.context.IndentUnit;
 import io.papermc.typewriter.replace.SearchMetadata;
 import io.papermc.typewriter.replace.SearchReplaceRewriter;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @Deprecated
 public class CraftItemMetasRewriter extends SearchReplaceRewriter {

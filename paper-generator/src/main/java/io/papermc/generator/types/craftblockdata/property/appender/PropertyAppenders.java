@@ -1,10 +1,10 @@
 package io.papermc.generator.types.craftblockdata.property.appender;
 
+import io.papermc.generator.types.Types;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import io.papermc.generator.types.Types;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jspecify.annotations.NullMarked;

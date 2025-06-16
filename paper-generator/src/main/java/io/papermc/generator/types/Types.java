@@ -2,9 +2,8 @@ package io.papermc.generator.types;
 
 import com.squareup.javapoet.ClassName;
 import io.papermc.typewriter.ClassNamed;
-import org.jspecify.annotations.NullMarked;
-
 import java.util.Arrays;
+import org.jspecify.annotations.NullMarked;
 
 import static io.papermc.generator.utils.BasePackage.BUKKIT;
 import static io.papermc.generator.utils.BasePackage.CRAFT_BUKKIT;

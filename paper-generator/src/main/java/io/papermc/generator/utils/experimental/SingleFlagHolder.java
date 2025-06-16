@@ -2,9 +2,9 @@ package io.papermc.generator.utils.experimental;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBiMap;
+import io.papermc.generator.utils.Formatting;
 import java.util.HashMap;
 import java.util.Map;
-import io.papermc.generator.utils.Formatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlagSet;

@@ -4,10 +4,10 @@ import io.papermc.generator.registry.RegistryBootstrapper;
 import io.papermc.generator.types.SourceGenerator;
 import io.papermc.generator.types.craftblockdata.CraftBlockDataBootstrapper;
 import io.papermc.generator.types.goal.MobGoalGenerator;
+import io.papermc.generator.utils.BasePackage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import io.papermc.generator.utils.BasePackage;
 import net.minecraft.Util;
 import org.jspecify.annotations.NullMarked;
 

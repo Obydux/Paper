@@ -4,10 +4,10 @@ import io.papermc.generator.registry.RegistryEntries;
 import io.papermc.generator.rewriter.types.Types;
 import io.papermc.typewriter.replace.SearchMetadata;
 import io.papermc.typewriter.replace.SearchReplaceRewriter;
+import java.util.Set;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import java.util.Set;
 
 public class RegistriesArgumentProviderRewriter extends SearchReplaceRewriter {
 

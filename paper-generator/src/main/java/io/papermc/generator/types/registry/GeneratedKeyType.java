@@ -83,7 +83,7 @@ public class GeneratedKeyType<T> extends SimpleGenerator implements RegistryIden
 
     @Override
     protected TypeSpec getTypeSpec() {
-        TypeName typedKeyType = ParameterizedTypeName.get(Types.TYPED_KEY, Types.typed(this.entry.data().api().klass()));
+        TypeName typedKeyType = ParameterizedTypeName.get(Types.TYPED_KEY, this.entry.data().api().getType());
 
         TypeSpec.Builder typeBuilder = this.keyHolderType();
         MethodSpec.Builder createMethod = this.createMethod(typedKeyType);

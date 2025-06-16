@@ -131,6 +131,7 @@ public class RoundtripCodecTest extends BootstrapTest {
                         BUKKIT.rootClassNamed("BlockEntityType"),
                         Optional.of(BUKKIT.rootClassNamed("BlockEntityTypes")),
                         RegistryData.Api.Type.INTERFACE,
+                        Optional.of(List.of(new RegistryData.Api.ParentClass(BUKKIT.rootClassNamed("SuperClass")))),
                         true,
                         Optional.of("BLOCK_ENTITY_TYPE")
                     ),
@@ -151,6 +152,11 @@ public class RoundtripCodecTest extends BootstrapTest {
                         BUKKIT.rootClassNamed("Attribute"),
                         Optional.of(BUKKIT.rootClassNamed("Attributes")),
                         Util.getRandom(RegistryData.Api.Type.values(), randomSource),
+                        Optional.of(List.of(new RegistryData.Api.ParentClass(BUKKIT.rootClassNamed("SuperClass"),
+                            Optional.of(List.of(
+                                new RegistryData.Api.ParentClass(BUKKIT.rootClassNamed("SuperClass2"))
+                            ))
+                        ))),
                         random.nextBoolean(),
                         Optional.of("ATTRIBUTE")
                     ),

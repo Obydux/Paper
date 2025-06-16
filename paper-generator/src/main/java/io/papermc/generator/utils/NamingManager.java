@@ -1,10 +1,10 @@
 package io.papermc.generator.utils;
 
 import com.google.common.base.CaseFormat;
-import java.util.Optional;
-import java.util.function.Predicate;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeName;
+import java.util.Optional;
+import java.util.function.Predicate;
 import javax.lang.model.SourceVersion;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;

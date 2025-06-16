@@ -2,8 +2,8 @@ package io.papermc.generator.rewriter.types.simple;
 
 import io.papermc.generator.resources.DataFileLoader;
 import io.papermc.generator.resources.DataFiles;
-import io.papermc.generator.rewriter.types.registry.EnumRegistryRewriter;
 import io.papermc.generator.resources.EntityTypeData;
+import io.papermc.generator.rewriter.types.registry.EnumRegistryRewriter;
 import io.papermc.typewriter.preset.model.EnumConstant;
 import java.util.ArrayList;
 import java.util.List;

@@ -6,9 +6,9 @@ import io.papermc.generator.resources.DataFile;
 import io.papermc.generator.resources.DataFileLoader;
 import io.papermc.generator.resources.FlattenSliceResult;
 import io.papermc.generator.resources.SliceResult;
-import org.slf4j.Logger;
 import java.io.IOException;
 import java.nio.file.Path;
+import org.slf4j.Logger;
 
 public class PrepareInputFiles {
 
