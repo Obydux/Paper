@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.function.Supplier;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.nbt.api.BinaryTagHolder;
@@ -42,6 +42,7 @@ import net.minecraft.commands.arguments.selector.SelectorPattern;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.contents.KeybindContents;
@@ -440,7 +441,11 @@ public final class AdventureCodecs {
 
     public static final Codec<BinaryTagHolder> BINARY_TAG_HOLDER_COMPOUND_CODEC = CompoundTag.CODEC.flatComapMap(PaperAdventure::asBinaryTagHolder, api -> {
         try {
-            return DataResult.success((CompoundTag) api.get(PaperAdventure.NBT_CODEC));
+            final Tag tag = api.get(PaperAdventure.NBT_CODEC);
+            if (!(tag instanceof final CompoundTag compoundTag)) {
+                return DataResult.error(() -> "Expected a CompoundTag, but got " + tag.getClass().getSimpleName());
+            }
+            return DataResult.success(compoundTag);
         } catch (CommandSyntaxException e) {
             return DataResult.error(e::getMessage);
         }

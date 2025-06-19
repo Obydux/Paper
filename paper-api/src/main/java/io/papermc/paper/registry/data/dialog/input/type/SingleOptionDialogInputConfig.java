@@ -46,7 +46,7 @@ public sealed interface SingleOptionDialogInputConfig extends DialogInputConfig 
     /**
      * Represents a single option entry in a single option dialog input.
      */
-    sealed interface OptionEntry permits SingleOptionEntryImpl {
+    sealed interface OptionEntry permits SingleOptionDialogInputConfigImpl.SingleOptionEntryImpl {
 
         /**
          * Creates a new option entry.
@@ -58,7 +58,7 @@ public sealed interface SingleOptionDialogInputConfig extends DialogInputConfig 
          */
         @Contract(pure = true, value = "_, _, _ -> new")
         static OptionEntry create(final String id, final @Nullable Component display, final boolean initial) {
-            return new SingleOptionEntryImpl(id, display, initial);
+            return new SingleOptionDialogInputConfigImpl.SingleOptionEntryImpl(id, display, initial);
         }
 
         /**
