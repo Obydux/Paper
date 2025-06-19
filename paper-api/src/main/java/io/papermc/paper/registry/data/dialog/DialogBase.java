@@ -40,6 +40,17 @@ public sealed interface DialogBase permits DialogBaseImpl {
     }
 
     /**
+     * Creates a new dialog base builder.
+     *
+     * @param title the title of the dialog
+     * @return a new dialog base builder
+     */
+    @Contract(value = "_ -> new", pure = true)
+    static Builder builder(final Component title) {
+        return new DialogBaseImpl.BuilderImpl(title);
+    }
+
+    /**
      * The title of the dialog.
      *
      * @return the title
@@ -124,5 +135,74 @@ public sealed interface DialogBase permits DialogBaseImpl {
         DialogAfterAction(final String name) {
             this.name = name;
         }
+    }
+
+    /**
+     * Builder interface for creating dialog bases.
+     */
+    sealed interface Builder permits DialogBaseImpl.BuilderImpl {
+
+        /**
+         * Sets the external title of the dialog.
+         * This title is used on buttons that open this dialog.
+         *
+         * @param externalTitle the external title of the dialog, or null if not set
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder externalTitle(@Nullable Component externalTitle);
+
+        /**
+         * Sets whether the dialog can be closed with the "escape" keybind.
+         *
+         * @param canCloseWithEscape if the dialog can be closed with "escape"
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder canCloseWithEscape(boolean canCloseWithEscape);
+
+        /**
+         * Sets whether the dialog should pause the game when opened (single-player only).
+         *
+         * @param pause if the dialog should pause the game
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder pause(boolean pause);
+
+        /**
+         * Sets the action to take after the dialog is closed.
+         *
+         * @param afterAction the action to take after the dialog is closed
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder afterAction(DialogAfterAction afterAction);
+
+        /**
+         * Sets the body of the dialog.
+         *
+         * @param body the body of the dialog
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder body(List<DialogBody> body);
+
+        /**
+         * Sets the inputs of the dialog.
+         *
+         * @param inputs the inputs of the dialog
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder inputs(List<DialogInput> inputs);
+
+        /**
+         * Builds the dialog base.
+         *
+         * @return the built dialog base
+         */
+        @Contract(pure = true, value = "-> new")
+        DialogBase build();
     }
 }
