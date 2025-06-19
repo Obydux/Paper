@@ -23,7 +23,7 @@ import org.jspecify.annotations.NullMarked;
         "SpellCheckingInspection"
 })
 @NullMarked
-@GeneratedFrom("1.21.6-pre3")
+@GeneratedFrom("1.21.6")
 public final class DialogKeys {
     /**
      * {@code minecraft:custom_options}

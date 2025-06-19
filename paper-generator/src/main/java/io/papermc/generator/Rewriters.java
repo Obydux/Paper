@@ -185,13 +185,13 @@ public final class Rewriters {
             .register("ChickenVariant", Chicken.Variant.class, new RegistryFieldRewriter<>(Registries.CHICKEN_VARIANT, "getVariant"))
             .register("CowVariant", Cow.Variant.class, new RegistryFieldRewriter<>(Registries.COW_VARIANT, "getVariant"))
             .register("PigVariant", Pig.Variant.class, new RegistryFieldRewriter<>(Registries.PIG_VARIANT, "getVariant"))
+            .register("Dialog", Dialog.class, new RegistryFieldRewriter<>(Registries.DIALOG, "getDialog"))
             .register("MemoryKey", MemoryKey.class, new MemoryKeyRewriter())
             // .register("ItemType", ItemType.class, new ItemTypeRewriter()) - disable for now, lynx want the generic type
             .register("BlockType", BlockType.class, new BlockTypeRewriter())
             .register("FeatureFlag", FeatureFlag.class, new FeatureFlagRewriter())
             .register("Tag", Tag.class, new TagRewriter())
-            .register("MapPalette#colors", MapPalette.class, new MapPaletteRewriter())
-            .register("Dialog", Dialog.class, new RegistryFieldRewriter<>(Registries.DIALOG, "getDialog"));
+            .register("MapPalette#colors", MapPalette.class, new MapPaletteRewriter());
         RegistryBootstrapper.bootstrapApi(sourceSet);
     }
 

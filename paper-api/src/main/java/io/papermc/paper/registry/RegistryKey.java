@@ -219,7 +219,6 @@ public sealed interface RegistryKey<T> extends Keyed permits RegistryKeyImpl {
      * @see io.papermc.paper.registry.keys.PigVariantKeys
      */
     RegistryKey<Pig.Variant> PIG_VARIANT = create("pig_variant");
-
     /**
      * Data-driven registry for dialogs.
      * @see io.papermc.paper.registry.keys.DialogKeys

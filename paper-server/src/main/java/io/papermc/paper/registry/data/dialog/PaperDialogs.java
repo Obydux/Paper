@@ -54,7 +54,7 @@ public final class PaperDialogs {
         final CommonDialogData common = conversions.convert(dialogBase, CommonDialogData.MAP_CODEC.codec(), PaperDialogCodecs.DIALOG_BASE_MAP_CODEC.codec());
         switch (dialogSpecialty) {
             case final ConfirmationSpecialty conf -> {
-                return new ConfirmationDialog(common, conversions.convert(conf.yesButton(), net.minecraft.server.dialog.ActionButton.CODEC, PaperDialogCodecs.ACTION_BUTTON_CODEC), conversions.convert(conf.noButton(), net.minecraft.server.dialog.ActionButton.CODEC, PaperDialogCodecs.ACTION_BUTTON_CODEC));
+                return new ConfirmationDialog(common, convertButton.apply(conf.yesButton()), convertButton.apply(conf.noButton()));
             }
             case final DialogListSpecialty list -> {
                 return new DialogListDialog(
