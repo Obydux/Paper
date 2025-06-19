@@ -62,7 +62,7 @@ record DialogBaseImpl(
         }
 
         @Override
-        public BuilderImpl body(final List<DialogBody> body) {
+        public BuilderImpl body(final List<? extends DialogBody> body) {
             this.body = List.copyOf(body);
             return this;
         }

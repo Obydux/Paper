@@ -3927,7 +3927,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
      */
     void setDeathScreenScore(int score);
 
+    /**
+     * @deprecated JUST FOR DEV TESTING
+     */
+    @Deprecated(forRemoval = true)
     void tempShowDialog(Dialog dialog);
 
+    /**
+     * @deprecated JUST FOR DEV TESTING
+     */
+    @Deprecated(forRemoval = true)
     void tempClearDialog();
 }

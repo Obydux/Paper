@@ -33,10 +33,10 @@ public sealed interface DialogBase permits DialogBaseImpl {
         final boolean canCloseWithEscape,
         final boolean pause,
         final DialogAfterAction afterAction,
-        final List<DialogBody> body,
+        final List<? extends DialogBody> body,
         final List<DialogInput> inputs
     ) {
-        return new DialogBaseImpl(title, externalTitle, canCloseWithEscape, pause, afterAction, body, inputs);
+        return new DialogBaseImpl(title, externalTitle, canCloseWithEscape, pause, afterAction, List.copyOf(body), inputs);
     }
 
     /**
@@ -186,7 +186,7 @@ public sealed interface DialogBase permits DialogBaseImpl {
          * @return this builder
          */
         @Contract(value = "_ -> this", mutates = "this")
-        Builder body(List<DialogBody> body);
+        Builder body(List<? extends DialogBody> body);
 
         /**
          * Sets the inputs of the dialog.

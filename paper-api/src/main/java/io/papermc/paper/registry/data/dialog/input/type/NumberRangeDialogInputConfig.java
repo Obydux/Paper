@@ -10,6 +10,19 @@ import org.jetbrains.annotations.Nullable;
 public sealed interface NumberRangeDialogInputConfig extends DialogInputConfig permits NumberRangeDialogInputConfigImpl {
 
     /**
+     * Creates a new builder for a number range dialog input configuration.
+     *
+     * @param label the label for the input
+     * @param start the start of the range
+     * @param end   the end of the range
+     * @return a new builder instance
+     */
+    @Contract(value = "_, _, _ -> new", pure = true)
+    static Builder builder(final Component label, final float start, final float end) {
+        return new NumberRangeDialogInputConfigImpl.BuilderImpl(label, start, end);
+    }
+
+    /**
      * The width of the input.
      *
      * @return the width
@@ -65,4 +78,56 @@ public sealed interface NumberRangeDialogInputConfig extends DialogInputConfig p
      */
     @Contract(pure = true)
     @Nullable Float step();
+
+    /**
+     * A builder for creating instances of {@link NumberRangeDialogInputConfig}.
+     */
+    sealed interface Builder permits NumberRangeDialogInputConfigImpl.BuilderImpl {
+
+        /**
+         * Sets the width of the input.
+         *
+         * @param width the width
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder width(int width);
+
+        /**
+         * Sets the format for the label.
+         * <p>Example: {@code "%s: %s"} or {@code "options.generic_value"}</p>
+         *
+         * @param labelFormat the label format
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", mutates = "this")
+        Builder labelFormat(String labelFormat);
+
+
+        /**
+         * Sets the initial value for the input.
+         *
+         * @param initial the initial value, or null if not set
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", pure = true)
+        Builder initial(@Nullable Float initial);
+
+        /**
+         * Sets the step of the range.
+         *
+         * @param step the step size, or null if not set
+         * @return this builder
+         */
+        @Contract(value = "_ -> this", pure = true)
+        Builder step(@Nullable Float step);
+
+        /**
+         * Builds the instance with the configured values.
+         *
+         * @return a new instance
+         */
+        @Contract(pure = true, value = "-> new")
+        NumberRangeDialogInputConfig build();
+    }
 }
