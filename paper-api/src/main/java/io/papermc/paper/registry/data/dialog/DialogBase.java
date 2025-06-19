@@ -5,11 +5,28 @@ import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import java.util.List;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.util.Index;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Unmodifiable;
 import org.jspecify.annotations.Nullable;
 
+/**
+ * Represents the base of all dialogs.
+ */
 public sealed interface DialogBase permits DialogBaseImpl {
 
+    /**
+     * Creates a new dialog base.
+     *
+     * @param title the title of the dialog
+     * @param externalTitle the external title of the dialog, or null if not set
+     * @param canCloseWithEscape if the dialog can be closed with the "escape" keybind
+     * @param pause if the dialog should pause the game when opened (single-player only)
+     * @param afterAction the action to take after the dialog is closed
+     * @param body the body of the dialog
+     * @param inputs the inputs of the dialog
+     * @return a new dialog base instance
+     */
+    @Contract(value = "_, _, _, _, _, _, _ -> new", pure = true)
     static DialogBase create(
         final Component title,
         final @Nullable Component externalTitle,
@@ -22,25 +39,85 @@ public sealed interface DialogBase permits DialogBaseImpl {
         return new DialogBaseImpl(title, externalTitle, canCloseWithEscape, pause, afterAction, body, inputs);
     }
 
+    /**
+     * The title of the dialog.
+     *
+     * @return the title
+     */
+    @Contract(pure = true)
     Component title();
 
-    @Nullable
-    Component externalTitle();
+    /**
+     * The external title of the dialog. This title
+     * is used on buttons that open this dialog.
+     *
+     * @return the external title or null
+     */
+    @Contract(pure = true)
+    @Nullable Component externalTitle();
 
+    /**
+     * Returns if this dialog can be closed with the "escape" keybind.
+     *
+     * @return if the dialog can be closed with "escape"
+     */
+    @Contract(pure = true)
     boolean canCloseWithEscape();
 
+    /**
+     * Returns if this dialog should pause the game when opened (single-player only).
+     *
+     * @return if the dialog pauses the game
+     */
+    @Contract(pure = true)
     boolean pause();
 
+    /**
+     * The action to take after the dialog is closed.
+     *
+     * @return the action to take after the dialog is closed
+     */
+    @Contract(pure = true)
     DialogAfterAction afterAction();
 
+    /**
+     * The body of the dialog.
+     * <p>
+     * The body is a list of {@link DialogBody} elements that will be displayed in the dialog.
+     *
+     * @return the body of the dialog
+     */
+    @Contract(pure = true)
     @Unmodifiable List<DialogBody> body();
 
+    /**
+     * The inputs of the dialog.
+     * <p>
+     * The inputs are a list of {@link DialogInput} elements that will be displayed in the dialog.
+     *
+     * @return the inputs of the dialog
+     */
+    @Contract(pure = true)
     @Unmodifiable List<DialogInput> inputs();
 
+    /**
+     * Actions to take after the dialog is closed.
+     */
     enum DialogAfterAction {
-        CLOSE("close"), NONE("none"), WAIT_FOR_RESPONSE("wait_for_response");
+        /**
+         * Closes the dialog and returns to the previous non-dialog screen (if any).
+         */
+        CLOSE("close"),
+        /**
+         * Does nothing (keeps the current screen open).
+         */
+        NONE("none"),
+        /**
+         * Replaces dialog with a "waiting for response" screen.
+         */
+        WAIT_FOR_RESPONSE("wait_for_response");
 
-        public static final Index<String, DialogAfterAction> NAMES = Index.create(DialogAfterAction.class, DialogAfterAction::name);
+        public static final Index<String, DialogAfterAction> NAMES = Index.create(DialogAfterAction.class, e -> e.name);
 
         private final String name;
 

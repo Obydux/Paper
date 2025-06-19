@@ -11,7 +11,7 @@ import io.papermc.paper.registry.data.dialog.DialogRegistryEntry;
 import io.papermc.paper.registry.data.dialog.action.DialogAction;
 import io.papermc.paper.registry.data.dialog.body.DialogBody;
 import io.papermc.paper.registry.data.dialog.input.DialogInput;
-import io.papermc.paper.registry.data.dialog.input.type.DialogInputType;
+import io.papermc.paper.registry.data.dialog.input.type.DialogInputConfig;
 import io.papermc.paper.registry.data.dialog.specialty.DialogSpecialty;
 import io.papermc.paper.registry.event.RegistryEvents;
 import io.papermc.paper.registry.keys.DialogKeys;
@@ -43,7 +43,7 @@ public class TestPluginBootstrap implements PluginBootstrap {
                 valueSetBuilder.add(b -> {
                     final DialogRegistryEntry.Builder builder = b.empty();
                     final List<DialogBody> body = List.of(DialogBody.plainMessage(text("Select relative coordinates", NamedTextColor.GREEN), 100));
-                    final List<DialogInput> inputs = List.of(DialogInput.create("x", DialogInputType.numberRange(100, text("X Coordinate", NamedTextColor.YELLOW), "options.generic_value", -1000f, 1000f, 0f, 1f)), DialogInput.create("y", DialogInputType.numberRange(100, text("Y Coordinate", NamedTextColor.YELLOW), "%s: ~%s", -1000f, 1000f, 0f, 1f)), DialogInput.create("z", DialogInputType.numberRange(100, text("Z Coordinate", NamedTextColor.YELLOW), "%s: ~%s", -1000f, 1000f, 0f, 1f)));
+                    final List<DialogInput> inputs = List.of(DialogInput.create("x", DialogInputConfig.numberRange(100, text("X Coordinate", NamedTextColor.YELLOW), "options.generic_value", -1000f, 1000f, 0f, 1f)), DialogInput.create("y", DialogInputConfig.numberRange(100, text("Y Coordinate", NamedTextColor.YELLOW), "%s: ~%s", -1000f, 1000f, 0f, 1f)), DialogInput.create("z", DialogInputConfig.numberRange(100, text("Z Coordinate", NamedTextColor.YELLOW), "%s: ~%s", -1000f, 1000f, 0f, 1f)));
                     builder.dialogBase(DialogBase.create(text("Teleport somewhere COOL", NamedTextColor.YELLOW), null, true, false, DialogBase.DialogAfterAction.CLOSE, body, inputs));
                     final ActionButton cancel = ActionButton.create(text("Cancel", NamedTextColor.RED), null, 50, null);
                     final ActionButton teleport = ActionButton.create(text("Teleport", NamedTextColor.GREEN), null, 50, DialogAction.commandTemplate("tp ~$(x) ~$(y) ~$(z)"));
@@ -51,7 +51,7 @@ public class TestPluginBootstrap implements PluginBootstrap {
                 }).add(b -> {
                     final DialogRegistryEntry.Builder builder = b.empty();
                     final List<DialogBody> body = List.of(DialogBody.plainMessage(text("Enter a message to say", NamedTextColor.GREEN), 100));
-                    final List<DialogInput> inputs = List.of(DialogInput.create("msg", DialogInputType.text(100, text("Message"), true, "", 1000, null)));
+                    final List<DialogInput> inputs = List.of(DialogInput.create("msg", DialogInputConfig.text(100, text("Message"), true, "", 1000, null)));
                     builder.dialogBase(DialogBase.create(text("Send a message"), null, true, false, DialogBase.DialogAfterAction.CLOSE, body, inputs));
                     final ActionButton cancel = ActionButton.create(text("Cancel", NamedTextColor.RED), null, 50, null);
                     final ActionButton say = ActionButton.create(text("Say the thing!", NamedTextColor.GREEN), null, 50, DialogAction.commandTemplate("say $(msg)")); // can't actually run this command cause signed args
