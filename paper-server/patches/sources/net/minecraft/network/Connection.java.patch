@@ -44,7 +44,8 @@
 +        if (this.packetListener instanceof net.minecraft.server.network.ServerGamePacketListenerImpl impl) {
 +            return impl.player;
 +        } else if (this.packetListener instanceof net.minecraft.server.network.ServerCommonPacketListenerImpl impl) {
-+            return null;
++            org.bukkit.craftbukkit.entity.CraftPlayer player = impl.getCraftPlayer();
++            return player == null ? null : player.getHandle();
 +        }
 +        return null;
 +    }
@@ -66,7 +67,6 @@
 +    }
 +    // Paper end - packet limiter
 +    @Nullable public SocketAddress haProxyAddress; // Paper - Add API to get player's proxy address
-+    public @Nullable net.minecraft.server.level.ServerPlayer savedPlayerForLoginEventLegacy; // Paper - playerloginevent
  
      public Connection(PacketFlow receiving) {
          this.receiving = receiving;
