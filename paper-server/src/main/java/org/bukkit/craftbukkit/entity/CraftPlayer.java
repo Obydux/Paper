@@ -3535,6 +3535,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void tempClearDialog() {
         if (this.getHandle().connection == null) return;
         this.getHandle().connection.send(ClientboundClearDialogPacket.INSTANCE);
+    }
+    
     public PlayerGameConnection getConnection() {
         return this.getHandle().connection.playerGameConnection;
     }
