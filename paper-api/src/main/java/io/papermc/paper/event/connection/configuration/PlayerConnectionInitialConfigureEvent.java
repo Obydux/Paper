@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.ApiStatus;
 
-public class PlayerConnectionInitialConfigureEvent extends PlayerConfigurationConnectionEvent {
+public class PlayerConnectionInitialConfigureEvent extends PlayerConfigurateConnectionEvent {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 

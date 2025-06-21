@@ -5,13 +5,14 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * A task that allows you to configurate the player.
+ * An event that allows you to configurate the player.
  * This is async and allows you to run configuration code on the player.
  * Once this event has finished execution, the player connection will continue.
  * <p>
  * This occurs after configuration, but before the player has entered the world.
+ * <p>
  */
-public class AsyncPlayerConnectionConfigureEvent extends PlayerConfigurationConnectionEvent {
+public class AsyncPlayerConnectionConfigureEvent extends PlayerConfigurateConnectionEvent {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     @ApiStatus.Internal

@@ -22,7 +22,7 @@ public class PaperPlayerConfigurationConnection extends PaperCommonConnection<Se
 
     @Override
     public PlayerProfile getProfile() {
-        return CraftPlayerProfile.asBukkitCopy(this.handle.gameProfile);
+        return CraftPlayerProfile.asBukkitCopy(this.handle.getOwner());
     }
 
     @Override

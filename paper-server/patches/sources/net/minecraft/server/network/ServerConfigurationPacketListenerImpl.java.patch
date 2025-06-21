@@ -1,17 +1,7 @@
 --- a/net/minecraft/server/network/ServerConfigurationPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerConfigurationPacketListenerImpl.java
-@@ -40,18 +_,20 @@
- public class ServerConfigurationPacketListenerImpl extends ServerCommonPacketListenerImpl implements ServerConfigurationPacketListener, TickablePacketListener {
-     private static final Logger LOGGER = LogUtils.getLogger();
-     private static final Component DISCONNECT_REASON_INVALID_DATA = Component.translatable("multiplayer.disconnect.invalid_player_data");
--    private final GameProfile gameProfile;
-+    public final GameProfile gameProfile; // Paper
-     private final Queue<ConfigurationTask> configurationTasks = new ConcurrentLinkedQueue<>();
-     @Nullable
--    private ConfigurationTask currentTask;
--    private ClientInformation clientInformation;
-+    public ConfigurationTask currentTask; // Paper
-+    public ClientInformation clientInformation; // Paper
+@@ -47,11 +_,13 @@
+     public ClientInformation clientInformation;
      @Nullable
      private SynchronizeRegistriesTask synchronizeRegistriesTask;
 +    public io.papermc.paper.connection.PaperPlayerConfigurationConnection paperConnection; // Paper
@@ -54,10 +44,16 @@
          }
  
          LayeredRegistryAccess<RegistryLayer> layeredRegistryAccess = this.server.registries();
-@@ -87,6 +_,7 @@
+@@ -87,11 +_,13 @@
          this.synchronizeRegistriesTask = new SynchronizeRegistriesTask(list, layeredRegistryAccess);
          this.configurationTasks.add(this.synchronizeRegistriesTask);
          this.addOptionalTasks();
++        this.configurationTasks.add(new io.papermc.paper.connection.PaperConfigurationTask(this)); // Paper
+         this.configurationTasks.add(new JoinWorldTask());
+         this.startNextTask();
+     }
+ 
+     public void returnToWorld() {
 +        this.configurationTasks.add(new io.papermc.paper.connection.PaperConfigurationTask(this)); // Paper
          this.configurationTasks.add(new JoinWorldTask());
          this.startNextTask();
@@ -97,7 +93,7 @@
 +            if (this.connection.savedPlayerForLoginEventLegacy != null) {
 +                serverPlayer = this.connection.savedPlayerForLoginEventLegacy;
 +                // WE have to do this because the player isnt updated properly
-+                serverPlayer.updateOptions(this.clientInformation);
++                serverPlayer.updateOptionsNoEvents(this.clientInformation);
 +            } else {
 +                serverPlayer = new ServerPlayer(this.server, this.server.overworld(), this.gameProfile, this.clientInformation);
 +            }
@@ -113,15 +109,6 @@
              this.connection.send(new ClientboundDisconnectPacket(DISCONNECT_REASON_INVALID_DATA));
              this.connection.disconnect(DISCONNECT_REASON_INVALID_DATA);
          }
-@@ -171,7 +_,7 @@
-         }
-     }
- 
--    private void finishCurrentTask(ConfigurationTask.Type taskType) {
-+    public void finishCurrentTask(ConfigurationTask.Type taskType) { // Paper
-         ConfigurationTask.Type type = this.currentTask != null ? this.currentTask.type() : null;
-         if (!taskType.equals(type)) {
-             throw new IllegalStateException("Unexpected request for task finish, current task: " + type + ", requested: " + taskType);
 @@ -180,4 +_,31 @@
              this.startNextTask();
          }

@@ -32,8 +32,7 @@ import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.NullMarked;
 
 /**
- * Fires when a server is currently considered "full", and is executed for each player
- * trying to join the server while it is in this state.
+ * Fires when computing if a server is currently considered full for a player.
  */
 @NullMarked
 public class PlayerServerFullCheckEvent extends Event {
@@ -42,16 +41,17 @@ public class PlayerServerFullCheckEvent extends Event {
 
     private final PlayerProfile profile;
     private Component kickMessage;
-    private boolean canJoin = false;
+    private boolean canJoin;
 
     @ApiStatus.Internal
-    public PlayerServerFullCheckEvent(final PlayerProfile profile, final Component kickMessage) {
+    public PlayerServerFullCheckEvent(final PlayerProfile profile, final Component kickMessage, final boolean shouldKick) {
         this.profile = profile;
         this.kickMessage = kickMessage;
+        this.canJoin = !shouldKick;
     }
 
     /**
-     * @return the currently planned message to send to the user if they are not whitelisted
+     * @return the currently planned message to send to the user if they are unable to join the server
      */
     @Contract(pure = true)
     public Component kickMessage() {
@@ -73,7 +73,7 @@ public class PlayerServerFullCheckEvent extends Event {
     }
 
     /**
-     * Forcibly allows you to override if a player is able to join the server despite the fullness check.
+     * Sets whether the player is able to join this server.
      * @param canJoin can join the server
      */
     public void setCanJoin(final boolean canJoin) {
@@ -81,9 +81,9 @@ public class PlayerServerFullCheckEvent extends Event {
     }
 
     /**
-     * Gets if the player is currently able to join the server despite the fullness check.
+     * Gets if the player is currently able to join the server.
      *
-     * @return can skip
+     * @return can join the server, or false if the server should be considered full
      */
     public boolean canJoin() {
         return this.canJoin;

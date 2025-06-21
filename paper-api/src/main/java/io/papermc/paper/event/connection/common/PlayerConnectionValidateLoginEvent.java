@@ -50,7 +50,7 @@ public class PlayerConnectionValidateLoginEvent extends Event {
 
     /**
      * Gets the reason for why a player is not allowed to join the server.
-     * This may be null in the case that the player is allowed to login.
+     * This will be null in the case that the player is allowed to login.
      *
      * @return disallow reason
      */

@@ -2096,7 +2096,7 @@ public class CraftEventFactory {
     }
     public static Component handleLoginResult(PlayerList.LoginResult result, PlayerConnection paperConnection, Connection connection, GameProfile profile, MinecraftServer server) {
         PlayerConnectionValidateLoginEvent event = new io.papermc.paper.event.connection.common.PlayerConnectionValidateLoginEvent(
-                paperConnection, result == null ? null : io.papermc.paper.adventure.PaperAdventure.asAdventure(result.message())
+                paperConnection, result.isAllowed() ? null : io.papermc.paper.adventure.PaperAdventure.asAdventure(result.message())
         );
         event.callEvent();
 

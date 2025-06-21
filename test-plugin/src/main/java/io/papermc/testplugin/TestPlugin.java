@@ -1,13 +1,20 @@
 package io.papermc.testplugin;
 
+import com.destroystokyo.paper.event.player.PlayerConnectionCloseEvent;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.event.connection.common.PlayerConnectionValidateLoginEvent;
+import io.papermc.paper.event.connection.configuration.AsyncPlayerConnectionConfigureEvent;
+import io.papermc.paper.event.connection.configuration.PlayerConnectionInitialConfigureEvent;
 import io.papermc.paper.event.connection.configuration.PlayerConnectionReconfigurateEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,25 +52,25 @@ public final class TestPlugin extends JavaPlugin implements Listener {
     //
     // // On initial configuration, store the cookie
     // @EventHandler
-    // public void onPlayerPreConfigurate(PlayerConnectionInitialConfigurateEvent event) {
+    // public void onPlayerPreConfigurate(PlayerConnectionInitialConfigureEvent event) {
     //     System.out.println("Giving " + event.getConfigurationConnection().getProfile().getName() + " a million cookies!");
     //     event.getConfigurationConnection().storeCookie(NamespacedKey.fromString("paper:has_cookies"), new byte[0]);
     // }
     //
     // // Now during config task, get their cookie state.
     // @EventHandler
-    // public void asyncConfigurate(AsyncPlayerConnectionConfigurateEvent event) throws InterruptedException {
+    // public void asyncConfigurate(AsyncPlayerConnectionConfigureEvent event) throws InterruptedException {
     //     Thread.sleep(5000); // wait 5 seconds cause i hate u
     //     event.getConfigurationConnection().transfer("127.0.0.1", 25565); // Transfer them to a server, now with our special cookie.
     // }
-
-    @EventHandler
-    public void loginEvent(PlayerConnectionReconfigurateEvent event) {
-        if (Boolean.valueOf(clear)) {
-            event.getConfigurationConnection().clearChat();
-        }
-        event.getConfigurationConnection().completeConfiguration();
-    }
+    //
+    // @EventHandler
+    // public void loginEvent(PlayerConnectionReconfigurateEvent event) {
+    //     if (Boolean.valueOf(clear)) {
+    //         event.getConfigurationConnection().clearChat();
+    //     }
+    //     event.getConfigurationConnection().completeConfiguration();
+    // }
 
     @EventHandler
     public void onPostConnection(PlayerConnectionValidateLoginEvent event) {

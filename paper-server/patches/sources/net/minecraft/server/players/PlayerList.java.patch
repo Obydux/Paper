@@ -339,7 +339,7 @@
              }
  
              @Override
-@@ -319,56 +_,135 @@
+@@ -319,56 +_,138 @@
      }
  
      protected void save(ServerPlayer player) {
@@ -448,6 +448,10 @@
 -        this.broadcastAll(new ClientboundPlayerInfoRemovePacket(List.of(player.getUUID())));
 -    }
 -
+-    @Nullable
+-    public Component canPlayerLogin(SocketAddress socketAddress, GameProfile gameProfile) {
+-        if (this.bans.isBanned(gameProfile)) {
+-            UserBanListEntry userBanListEntry = this.bans.get(gameProfile);
 +            // CraftBukkit start
 +            // this.stats.remove(uuid);
 +            // this.advancements.remove(uuid);
@@ -475,12 +479,12 @@
 +    // Paper start - PlayerLoginEvent
 +    public record LoginResult(@Nullable Component message, @org.jetbrains.annotations.NotNull org.bukkit.event.player.PlayerLoginEvent.Result result) {
 +        public static LoginResult ALLOW = new net.minecraft.server.players.PlayerList.LoginResult(null, org.bukkit.event.player.PlayerLoginEvent.Result.ALLOWED);
++
++        public boolean isAllowed() {
++            return this == ALLOW;
++        }
 +    }
 +    // Paper end - PlayerLoginEvent
-     @Nullable
--    public Component canPlayerLogin(SocketAddress socketAddress, GameProfile gameProfile) {
--        if (this.bans.isBanned(gameProfile)) {
--            UserBanListEntry userBanListEntry = this.bans.get(gameProfile);
 +    public LoginResult canPlayerLogin(SocketAddress socketAddress, GameProfile gameProfile) { // Paper - PlayerLoginEvent
 +        LoginResult whitelistEventResult; // Paper
 +        // Paper start - Fix MC-158900
@@ -505,19 +509,20 @@
          } else if (this.ipBans.isBanned(socketAddress)) {
              IpBanListEntry ipBanListEntry = this.ipBans.get(socketAddress);
              MutableComponent mutableComponent = Component.translatable("multiplayer.disconnect.banned_ip.reason", ipBanListEntry.getReason());
-@@ -388,10 +_,10 @@
+@@ -388,11 +_,9 @@
                  );
              }
  
 -            return mutableComponent;
 +            return new LoginResult(mutableComponent, org.bukkit.event.player.PlayerLoginEvent.Result.KICK_BANNED); // Paper - PlayerLoginEvent
          } else {
-             return this.players.size() >= this.maxPlayers && !this.canBypassPlayerLimit(gameProfile)
+-            return this.players.size() >= this.maxPlayers && !this.canBypassPlayerLimit(gameProfile)
 -                ? Component.translatable("multiplayer.disconnect.server_full")
-+                ? this.canBypassFullServerLogin(gameProfile, new LoginResult(Component.translatable("multiplayer.disconnect.server_full"), org.bukkit.event.player.PlayerLoginEvent.Result.KICK_FULL)) // Paper - PlayerServerFullCheckEvent
-                 : null;
+-                : null;
++            return this.canBypassFullServerLogin(gameProfile, new LoginResult(Component.translatable("multiplayer.disconnect.server_full"), org.bukkit.event.player.PlayerLoginEvent.Result.KICK_FULL)); // Paper - PlayerServerFullCheckEvent
          }
      }
+ 
 @@ -401,7 +_,7 @@
          Set<ServerPlayer> set = Sets.newIdentityHashSet();
  
@@ -774,7 +779,7 @@
          if (player.connection != null) {
              byte b;
              if (permLevel <= 0) {
-@@ -597,9 +_,46 @@
+@@ -597,9 +_,48 @@
              player.connection.send(new ClientboundEntityEventPacket(player, b));
          }
  
@@ -787,10 +792,12 @@
 +    }
 +
 +    // Paper start - whitelist verify event / login event
-+    public LoginResult canBypassFullServerLogin(GameProfile profile, final LoginResult currentResult) {
++    public LoginResult canBypassFullServerLogin(final GameProfile profile, final LoginResult currentResult) {
++        final boolean shouldKick = this.players.size() >= this.maxPlayers && !this.canBypassPlayerLimit(profile);
 +        final io.papermc.paper.event.player.PlayerServerFullCheckEvent fullCheckEvent = new io.papermc.paper.event.player.PlayerServerFullCheckEvent(
 +            com.destroystokyo.paper.profile.CraftPlayerProfile.asBukkitMirror(profile),
-+            io.papermc.paper.adventure.PaperAdventure.asAdventure(currentResult.message)
++            io.papermc.paper.adventure.PaperAdventure.asAdventure(currentResult.message),
++            shouldKick
 +        );
 +
 +        fullCheckEvent.callEvent();
@@ -815,7 +822,7 @@
 +            return new net.minecraft.server.players.PlayerList.LoginResult(io.papermc.paper.adventure.PaperAdventure.asVanilla(event.kickMessage() == null ? configuredMessage : event.kickMessage()), org.bukkit.event.player.PlayerLoginEvent.Result.KICK_WHITELIST);
 +        }
 +
-+        return new net.minecraft.server.players.PlayerList.LoginResult(null, org.bukkit.event.player.PlayerLoginEvent.Result.ALLOWED);
++        return net.minecraft.server.players.PlayerList.LoginResult.ALLOW;
 +    }
 +    // Paper end
 +

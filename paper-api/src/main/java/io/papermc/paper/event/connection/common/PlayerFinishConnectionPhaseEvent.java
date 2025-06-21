@@ -11,6 +11,9 @@ import org.jspecify.annotations.Nullable;
  * Called when a player's connection phase is effectively "finished", meaning
  * that they are progressing to another connection stage.
  * <p>
+ * All connection related conditions are done before this event, meaning that this event
+ * is the LAST determiner if a player progresses onto the other connection stage.
+ * <p>
  * Currently fires during the login and configuration protocol.
  */
 public class PlayerFinishConnectionPhaseEvent extends Event {
