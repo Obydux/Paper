@@ -103,7 +103,6 @@ public sealed interface NumberRangeDialogInputConfig extends DialogInputConfig p
         @Contract(value = "_ -> this", mutates = "this")
         Builder labelFormat(String labelFormat);
 
-
         /**
          * Sets the initial value for the input.
          *

@@ -35,6 +35,7 @@ public interface DialogRegistryEntry {
          * Provides a builder for dialog {@link io.papermc.paper.registry.set.RegistryValueSet} which
          * can be used inside {@link io.papermc.paper.registry.data.dialog.specialty.DialogListSpecialty}.
          * <p>Not a part of the registry entry.</p>
+         *
          * @return a new registry value set builder
          */
         @Contract(value = "-> new", pure = true)

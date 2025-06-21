@@ -28,6 +28,7 @@ import net.minecraft.server.dialog.CommonButtonData;
 import net.minecraft.server.dialog.Dialog;
 import net.minecraft.server.dialog.action.ParsedTemplate;
 import net.minecraft.server.dialog.body.PlainMessage;
+import net.minecraft.server.dialog.input.TextInput;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -83,8 +84,8 @@ public final class PaperDialogCodecs {
             SIMPLE_PLAIN_MESSAGE_BODY_CODEC.optionalFieldOf("description").forGetter(body -> Optional.ofNullable(body.description())),
             Codec.BOOL.optionalFieldOf("show_decorations", true).forGetter(DialogBody.ItemBody::showDecorations),
             Codec.BOOL.optionalFieldOf("show_tooltip", true).forGetter(DialogBody.ItemBody::showTooltip),
-            Dialog.WIDTH_CODEC.optionalFieldOf("width", 16).forGetter(DialogBody.ItemBody::width),
-            Dialog.WIDTH_CODEC.optionalFieldOf("height", 16).forGetter(DialogBody.ItemBody::height)
+            ExtraCodecs.intRange(1, 256).optionalFieldOf("width", 16).forGetter(DialogBody.ItemBody::width),
+            ExtraCodecs.intRange(1, 256).optionalFieldOf("height", 16).forGetter(DialogBody.ItemBody::height)
         ).apply(instance, (itemStack, plainMessageBody, showDecorations, showTooltip, width, height) -> DialogBody.item(itemStack, plainMessageBody.orElse(null), showDecorations, showTooltip, width, height))
     );
     private static final Registry<MapCodec<? extends DialogBody>> DIALOG_BODY_TYPES = Util.make(() -> {
@@ -136,7 +137,7 @@ public final class PaperDialogCodecs {
     );
     private static final Codec<TextDialogInputConfig.MultilineOptions> TEXT_DIALOG_INPUT_MULTILINE_OPTIONS_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ExtraCodecs.POSITIVE_INT.optionalFieldOf("max_lines").forGetter(options -> Optional.ofNullable(options.maxLines())),
-            ExtraCodecs.intRange(1, 512).optionalFieldOf("height").forGetter(options -> Optional.ofNullable(options.height()))
+            ExtraCodecs.intRange(1, TextInput.MultilineOptions.MAX_HEIGHT).optionalFieldOf("height").forGetter(options -> Optional.ofNullable(options.height()))
         ).apply(instance, (maxLines, height) -> TextDialogInputConfig.MultilineOptions.create(maxLines.orElse(null), height.orElse(null)))
     );
     private static final MapCodec<TextDialogInputConfig> TEXT_DIALOG_INPUT_TYPE_MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
