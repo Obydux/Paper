@@ -1,10 +1,15 @@
 package io.papermc.paper.dialog;
 
+import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryBuilderFactory;
+import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.data.InlinedRegistryBuilderProvider;
 import io.papermc.paper.registry.data.dialog.DialogRegistryEntry;
 import java.util.function.Consumer;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.KeyPattern;
 import org.bukkit.Keyed;
+import org.bukkit.Registry;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -23,5 +28,19 @@ public interface Dialog extends Keyed {
     @ApiStatus.Experimental
     static Dialog create(final Consumer<RegistryBuilderFactory<Dialog, ? extends DialogRegistryEntry.Builder>> value) {
         return InlinedRegistryBuilderProvider.instance().createDialog(value);
+    }
+
+    // Start generate - Dialog
+    // @GeneratedFrom 1.21.6
+    Dialog CUSTOM_OPTIONS = getDialog("custom_options");
+
+    Dialog QUICK_ACTIONS = getDialog("quick_actions");
+
+    Dialog SERVER_LINKS = getDialog("server_links");
+    // End generate - Dialog
+
+    private static Dialog getDialog(@KeyPattern.Value final String value) {
+        final Registry<Dialog> registry = RegistryAccess.registryAccess().getRegistry(RegistryKey.DIALOG);
+        return registry.getOrThrow(Key.key(Key.MINECRAFT_NAMESPACE, value));
     }
 }

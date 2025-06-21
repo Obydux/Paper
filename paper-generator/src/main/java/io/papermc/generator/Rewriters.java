@@ -23,6 +23,7 @@ import io.papermc.generator.rewriter.types.simple.trial.VillagerProfessionRewrit
 import io.papermc.generator.types.goal.MobGoalNames;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
+import io.papermc.paper.dialog.Dialog;
 import io.papermc.typewriter.preset.EnumCloneRewriter;
 import io.papermc.typewriter.preset.model.EnumValue;
 import io.papermc.typewriter.replace.SearchMetadata;
@@ -189,7 +190,8 @@ public final class Rewriters {
             .register("BlockType", BlockType.class, new BlockTypeRewriter())
             .register("FeatureFlag", FeatureFlag.class, new FeatureFlagRewriter())
             .register("Tag", Tag.class, new TagRewriter())
-            .register("MapPalette#colors", MapPalette.class, new MapPaletteRewriter());
+            .register("MapPalette#colors", MapPalette.class, new MapPaletteRewriter())
+            .register("Dialog", Dialog.class, new RegistryFieldRewriter<>(Registries.DIALOG, "getDialog"));
         RegistryBootstrapper.bootstrapApi(sourceSet);
     }
 
