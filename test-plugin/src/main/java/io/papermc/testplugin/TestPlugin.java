@@ -1,21 +1,11 @@
 package io.papermc.testplugin;
 
-import com.destroystokyo.paper.event.player.PlayerConnectionCloseEvent;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.event.connection.common.PlayerConnectionValidateLoginEvent;
-import io.papermc.paper.event.connection.configuration.AsyncPlayerConnectionConfigureEvent;
-import io.papermc.paper.event.connection.configuration.PlayerConnectionInitialConfigureEvent;
-import io.papermc.paper.event.connection.configuration.PlayerConnectionReconfigurateEvent;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TestPlugin extends JavaPlugin implements Listener {

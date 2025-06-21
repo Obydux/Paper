@@ -4,57 +4,60 @@ import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import io.papermc.paper.adventure.PaperAdventure;
 import net.kyori.adventure.text.Component;
-import net.minecraft.network.protocol.cookie.ServerboundCookieResponsePacket;
 import net.minecraft.server.network.ServerLoginPacketListenerImpl;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
-public class PaperPlayerLoginConnection extends CommonCookieConnection implements PlayerLoginConnection {
+public class PaperPlayerLoginConnection extends ReadablePlayerCookieConnectionImpl implements PlayerLoginConnection {
 
-    private final ServerLoginPacketListenerImpl serverLoginPacketListener;
+    private final ServerLoginPacketListenerImpl handle;
 
     public PaperPlayerLoginConnection(final ServerLoginPacketListenerImpl serverLoginPacketListener) {
         super(serverLoginPacketListener.connection);
-        this.serverLoginPacketListener = serverLoginPacketListener;
+        this.handle = serverLoginPacketListener;
     }
 
     @Override
     public @Nullable PlayerProfile getAuthenticatedProfile() {
-        return this.serverLoginPacketListener.authenticatedProfile == null ? null : CraftPlayerProfile.asBukkitCopy(this.serverLoginPacketListener.authenticatedProfile);
+        return this.handle.authenticatedProfile == null ? null : CraftPlayerProfile.asBukkitCopy(this.handle.authenticatedProfile);
     }
 
     @Override
     public @Nullable PlayerProfile getUnsafeProfile() {
         // TODO: may violate the player profile contract -- split out
-        return new CraftPlayerProfile(this.serverLoginPacketListener.requestedUuid,  this.serverLoginPacketListener.requestedUsername);
+        return new CraftPlayerProfile(this.handle.requestedUuid,  this.handle.requestedUsername);
     }
 
     @Override
-    public @NotNull InetAddress getAddress() {
-        return ((java.net.InetSocketAddress) this.serverLoginPacketListener.connection.getRemoteAddress()).getAddress();
+    public SocketAddress getAddress() {
+        return this.handle.connection.getRemoteAddress();
     }
 
     @Override
-    public @NotNull InetAddress getRawAddress() {
-        return ((InetSocketAddress) this.serverLoginPacketListener.connection.channel.remoteAddress()).getAddress();
+    public InetSocketAddress getClientAddress() {
+        return (InetSocketAddress) this.handle.connection.channel.remoteAddress();
     }
 
     @Override
-    public @NotNull String getHostname() {
-        return this.serverLoginPacketListener.connection.hostname;
+    public @org.jspecify.annotations.Nullable InetSocketAddress getVirtualHost() {
+        return this.handle.connection.virtualHost;
+    }
+
+    @Override
+    public @org.jspecify.annotations.Nullable InetSocketAddress getHAProxyAddress() {
+        return this.handle.connection.haProxyAddress instanceof final InetSocketAddress inetSocketAddress ? inetSocketAddress : null;
     }
 
     @Override
     public boolean isTransferred() {
-        return this.serverLoginPacketListener.transferred;
+        return this.handle.transferred;
     }
 
     @Override
     public void disconnect(final Component component) {
-        this.serverLoginPacketListener.disconnect(PaperAdventure.asVanilla(component));
+        this.handle.disconnect(PaperAdventure.asVanilla(component));
     }
 }

@@ -26,21 +26,6 @@ public class PaperPlayerConfigurationConnection extends PaperCommonConnection<Se
     }
 
     @Override
-    public @NotNull InetAddress getAddress() {
-        return ((InetSocketAddress) this.handle.connection.getRemoteAddress()).getAddress();
-    }
-
-    @Override
-    public @NotNull InetAddress getRawAddress() {
-        return ((InetSocketAddress) this.handle.connection.channel.remoteAddress()).getAddress();
-    }
-
-    @Override
-    public @NotNull String getHostname() {
-        return this.handle.connection.hostname;
-    }
-
-    @Override
     public void clearChat() {
         this.handle.send(ClientboundResetChatPacket.INSTANCE);
     }

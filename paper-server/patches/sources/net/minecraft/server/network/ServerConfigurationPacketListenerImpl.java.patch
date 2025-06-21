@@ -129,7 +129,7 @@
 +    }
 +
 +    @Override
-+    public io.papermc.paper.connection.CommonCookieConnection getCookieConnection() {
++    public io.papermc.paper.connection.ReadablePlayerCookieConnectionImpl getCookieConnection() {
 +        return this.paperConnection;
 +    }
 +

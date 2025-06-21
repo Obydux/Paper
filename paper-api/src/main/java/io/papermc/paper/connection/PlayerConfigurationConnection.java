@@ -14,28 +14,6 @@ public interface PlayerConfigurationConnection extends PlayerCommonConnection {
     PlayerProfile getProfile();
 
     /**
-     * Gets the player IP address.
-     *
-     * @return The IP address
-     */
-    InetAddress getAddress();
-
-    /**
-     * Gets the raw address of the player logging in
-     *
-     * @return The address
-     */
-    InetAddress getRawAddress();
-
-    /**
-     * Gets the hostname that the player used to connect to the server, or
-     * blank if unknown
-     *
-     * @return The hostname
-     */
-    String getHostname();
-
-    /**
      * Clears the players chat history and their local chat.
      */
     void clearChat();

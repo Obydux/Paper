@@ -1,13 +1,5 @@
 --- a/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerLoginPacketListenerImpl.java
-@@ -13,7 +_,6 @@
- import java.util.Objects;
- import java.util.concurrent.atomic.AtomicInteger;
- import javax.annotation.Nullable;
--import javax.crypto.Cipher;
- import javax.crypto.SecretKey;
- import net.minecraft.CrashReport;
- import net.minecraft.CrashReportCategory;
 @@ -44,9 +_,16 @@
  import org.apache.commons.lang3.Validate;
  import org.slf4j.Logger;

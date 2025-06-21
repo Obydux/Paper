@@ -9,7 +9,7 @@ import org.jspecify.annotations.Nullable;
 /**
  * Represents a connection that has properties shared between the GAME and CONFIG stage.
  */
-public interface PlayerCommonConnection extends CookieConnection {
+public interface PlayerCommonConnection extends WritablePlayerCookieConnection, ReadablePlayerCookieConnection {
 
     void sendResourcePacks(final ResourcePackRequest request);
 
@@ -43,12 +43,4 @@ public interface PlayerCommonConnection extends CookieConnection {
      * @param port port
      */
     void transfer(String host, int port);
-
-    /**
-     * Gets the brand of this player.
-     * It is generally expected that the brand will be available.
-     *
-     * @return brand, or null if not present
-     */
-    @Nullable String getBrand();
 }

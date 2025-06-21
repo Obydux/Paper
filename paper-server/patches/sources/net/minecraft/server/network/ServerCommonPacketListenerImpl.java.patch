@@ -244,7 +244,7 @@
 +
 +    public abstract void disconnectAsync(DisconnectionDetails disconnectionInfo);
 +
-+    public abstract io.papermc.paper.connection.CommonCookieConnection getCookieConnection();
++    public abstract io.papermc.paper.connection.ReadablePlayerCookieConnectionImpl getCookieConnection();
 +
 +    public boolean isTransferred() {
 +        return this.transferred;

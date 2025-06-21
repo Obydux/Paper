@@ -3341,7 +3341,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     // Paper start - brand support
     @Override
     public String getClientBrandName() {
-        return getHandle().connection.playerGameConnection.getBrand();
+        return getHandle().connection.playerBrand;
     }
     // Paper end
 
